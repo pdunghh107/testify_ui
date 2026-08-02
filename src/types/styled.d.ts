@@ -5,6 +5,6 @@ import { AppTheme } from "../styles/theme";
 
 // Mở rộng module styled-components
 declare module "styled-components" {
-  // Ghi đè (override) type DefaultTheme mặc định bằng type AppTheme của dự án
+  // Ghi đè (override) type DefaultTheme mặc định bằng type AppTheme của Workspace
   export interface DefaultTheme extends AppTheme {}
 }

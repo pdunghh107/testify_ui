@@ -1,6 +1,11 @@
-import { forwardRef, useImperativeHandle, type ComponentProps } from "react";
-import { useForm, FormProvider, type UseFormReturn, type FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { type ComponentProps, forwardRef, useImperativeHandle } from "react";
+import {
+  type FieldValues,
+  FormProvider,
+  useForm,
+  type UseFormReturn,
+} from "react-hook-form";
 import type { ZodType } from "zod";
 
 // Định nghĩa API gọi từ component cha
@@ -27,7 +32,13 @@ interface FormProps<TFieldValues extends FieldValues> extends Omit<
 // Trick ép kiểu để forwardRef không làm mất Generics Type của Typescript
 export const Form = forwardRef(
   <TFieldValues extends FieldValues>(
-    { schema, defaultData, onSubmit, children, ...props }: FormProps<TFieldValues>,
+    {
+      schema,
+      defaultData,
+      onSubmit,
+      children,
+      ...props
+    }: FormProps<TFieldValues>,
     ref: React.Ref<FormInstance>,
   ) => {
     const methods = useForm<TFieldValues>({

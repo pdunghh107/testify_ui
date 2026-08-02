@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const StyledAsterisk = styled.span`
-  color: ${({ theme }) => theme.colors.danger};
   margin-left: 4px;
+  color: ${({ theme }) => theme.colors.danger};
 `;
 
 export function RequiredAsterisk() {

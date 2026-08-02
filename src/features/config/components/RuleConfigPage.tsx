@@ -64,11 +64,11 @@ export function RuleConfigPage() {
       if (field.required) ruleDetails.required = true;
       if (field.unique) ruleDetails.unique = true;
       if (field.type === "string") {
-        if (field.minLength !== undefined && field.minLength !== null && field.minLength !== "") ruleDetails.minLength = Number(field.minLength);
-        if (field.maxLength !== undefined && field.maxLength !== null && field.maxLength !== "") ruleDetails.maxLength = Number(field.maxLength);
+        if (field.minLength !== undefined && field.minLength !== null) ruleDetails.minLength = Number(field.minLength);
+        if (field.maxLength !== undefined && field.maxLength !== null) ruleDetails.maxLength = Number(field.maxLength);
       } else if (field.type === "number") {
-        if (field.min !== undefined && field.min !== null && field.min !== "") ruleDetails.min = Number(field.min);
-        if (field.max !== undefined && field.max !== null && field.max !== "") ruleDetails.max = Number(field.max);
+        if (field.min !== undefined && field.min !== null) ruleDetails.min = Number(field.min);
+        if (field.max !== undefined && field.max !== null) ruleDetails.max = Number(field.max);
       } else if (field.type === "enum" && field.enumValuesStr) {
         const arr = field.enumValuesStr.split(",").map(s => s.trim()).filter(s => s.length > 0);
         if (arr.length > 0) ruleDetails.enumValues = arr;
@@ -172,11 +172,11 @@ export function RuleConfigPage() {
           if (field.unique) ruleDetails.unique = true;
           
           if (field.type === "string") {
-            if (field.minLength !== undefined && field.minLength !== null && field.minLength !== "") ruleDetails.minLength = Number(field.minLength);
-            if (field.maxLength !== undefined && field.maxLength !== null && field.maxLength !== "") ruleDetails.maxLength = Number(field.maxLength);
+            if (field.minLength !== undefined && field.minLength !== null) ruleDetails.minLength = Number(field.minLength);
+            if (field.maxLength !== undefined && field.maxLength !== null) ruleDetails.maxLength = Number(field.maxLength);
           } else if (field.type === "number") {
-            if (field.min !== undefined && field.min !== null && field.min !== "") ruleDetails.min = Number(field.min);
-            if (field.max !== undefined && field.max !== null && field.max !== "") ruleDetails.max = Number(field.max);
+            if (field.min !== undefined && field.min !== null) ruleDetails.min = Number(field.min);
+            if (field.max !== undefined && field.max !== null) ruleDetails.max = Number(field.max);
           } else if (field.type === "enum" && field.enumValuesStr) {
             const arr = field.enumValuesStr.split(",").map(s => s.trim()).filter(s => s.length > 0);
             if (arr.length > 0) ruleDetails.enumValues = arr;

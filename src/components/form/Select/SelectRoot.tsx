@@ -1,19 +1,20 @@
-import * as React from "react";
 import {
+  autoUpdate,
+  flip,
+  offset,
+  type Placement,
+  size,
+  useClick,
+  useDismiss,
   useFloating,
   useInteractions,
   useListNavigation,
   useRole,
-  useClick,
-  useDismiss,
-  offset,
-  flip,
-  size,
-  autoUpdate,
   useTransitionStyles,
-  type Placement,
 } from "@floating-ui/react";
-import { SelectProvider, type SelectOptionType } from "./SelectContext";
+import * as React from "react";
+
+import { type SelectOptionType, SelectProvider } from "./SelectContext";
 
 export interface SelectRootProps {
   children: React.ReactNode;

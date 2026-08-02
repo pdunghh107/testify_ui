@@ -9,19 +9,17 @@ import {
 } from "@/features/request/api/useRequestQueries";
 import {
   useDeleteFolder,
-  useDeleteProject,
+  useDeleteWorkspace,
   useFolders,
-  useProjects,
-} from "@/features/workspace/api/useProjectQueries";
+} from "@/features/workspace/api/useWorkspaceQueries";
 import { CreateFolderModal } from "@/features/workspace/components/modal/CreateFolderModal";
-import { CreateProjectModal } from "@/features/workspace/components/modal/CreateProjectModal";
+import { CreateWorkspaceModal } from "@/features/workspace/components/modal/CreateWorkspaceModal";
 import { CreateRequestModal } from "@/features/workspace/components/modal/CreateRequestModal";
 import { useConfirm } from "@/hooks/useConfirm";
-import { useProjectStore } from "@/store/projectStore";
+import { useProjectStore } from "@/store/workspaceStore";
 
 import {
   getFolderActions,
-  getProjectActions,
   getRequestActions,
   type WorkspaceSidebarHandlers,
 } from "../config/sidebarActions";
@@ -32,47 +30,46 @@ export const useWorkspaceTree = () => {
 
   const [folderModalState, setFolderModalState] = useState<{
     isOpen: boolean;
-    projectId?: string;
+    workspaceId?: string;
     parentFolderId?: string;
   }>({ isOpen: false });
 
   const [requestModalState, setRequestModalState] = useState<{
     isOpen: boolean;
-    projectId?: string;
+    workspaceId?: string;
     folderId?: string;
   }>({ isOpen: false });
 
   const confirm = useConfirm();
 
   // 2. Domain Data
-  const { activeProjectId } = useProjectStore();
-  const { data: projects = [] } = useProjects();
-  const { data: activeProjectFolders = [] } = useFolders(
-    activeProjectId || null,
+  const { activeWorkspaceId } = useProjectStore();
+  const { data: activeWorkspaceFolders = [] } = useFolders(
+    activeWorkspaceId || null,
   );
-  const { data: activeProjectRequests = [] } = useRequests(
-    activeProjectId || null,
+  const { data: activeWorkspaceRequests = [] } = useRequests(
+    activeWorkspaceId || null,
   );
 
   // Mutations
-  const deleteProject = useDeleteProject();
-  const deleteFolder = useDeleteFolder(activeProjectId || "");
-  const deleteRequest = useDeleteRequest(activeProjectId || "");
+  const deleteProject = useDeleteWorkspace();
+  const deleteFolder = useDeleteFolder(activeWorkspaceId || "");
+  const deleteRequest = useDeleteRequest(activeWorkspaceId || "");
 
   // 3. Handlers for Factory
   const handlers: WorkspaceSidebarHandlers = useMemo(
     () => ({
-      onNewFolder: (projectId, parentFolderId) => {
-        setFolderModalState({ isOpen: true, projectId, parentFolderId });
+      onNewFolder: (workspaceId, parentFolderId) => {
+        setFolderModalState({ isOpen: true, workspaceId, parentFolderId });
       },
-      onDeleteProject: (projectId, projectName) => {
+      onDeleteProject: (workspaceId, projectName) => {
         confirm({
-          title: "Xóa Project",
-          body: `Bạn có chắc chắn muốn xóa Project "${projectName}" không? Toàn bộ dữ liệu bên trong sẽ bị mất vĩnh viễn.`,
+          title: "Xóa Workspace",
+          body: `Bạn có chắc chắn muốn xóa Workspace "${projectName}" không? Toàn bộ dữ liệu bên trong sẽ bị mất vĩnh viễn.`,
           type: "danger",
           action: async () => {
-            await deleteProject.mutateAsync(projectId);
-            toast.success("Xóa Project thành công");
+            await deleteProject.mutateAsync(workspaceId);
+            toast.success("Xóa Workspace thành công");
           },
         });
       },
@@ -87,8 +84,8 @@ export const useWorkspaceTree = () => {
           },
         });
       },
-      onNewRequest: (projectId, folderId) => {
-        setRequestModalState({ isOpen: true, projectId, folderId });
+      onNewRequest: (workspaceId, folderId) => {
+        setRequestModalState({ isOpen: true, workspaceId, folderId });
       },
       onDeleteRequest: (requestId, requestName) => {
         confirm({
@@ -111,11 +108,11 @@ export const useWorkspaceTree = () => {
       projId: string,
       currentDepth: number = 0,
     ): SidebarNode[] => {
-      const childrenFolders = activeProjectFolders.filter(
+      const childrenFolders = activeWorkspaceFolders.filter(
         (f) => (f.parentFolderId || null) === parentFolderId,
       );
 
-      const childrenRequests = activeProjectRequests.filter(
+      const childrenRequests = activeWorkspaceRequests.filter(
         (r) => (r.folderId || null) === parentFolderId,
       );
 
@@ -133,7 +130,7 @@ export const useWorkspaceTree = () => {
         children: buildFolderNodes(folder.id, projId, currentDepth + 1),
         originalData: {
           type: "folder",
-          projectId: projId,
+          workspaceId: projId,
           folderId: folder.id,
         },
       }));
@@ -146,7 +143,7 @@ export const useWorkspaceTree = () => {
         children: [],
         originalData: {
           type: "request",
-          projectId: projId,
+          workspaceId: projId,
           requestId: req.id,
         },
       }));
@@ -154,47 +151,33 @@ export const useWorkspaceTree = () => {
       return [...folderNodes, ...requestNodes];
     };
 
-    return projects.map((proj) => {
-      const isProjectActive = activeProjectId === proj.id;
+    if (!activeWorkspaceId) return [];
 
-      return {
-        id: proj.id,
-        label: proj.name,
-        actions: getProjectActions(proj.id, proj.name, handlers),
-        children: isProjectActive ? buildFolderNodes(null, proj.id) : [],
-        originalData: { type: "project", projectId: proj.id },
-      };
-    });
-  }, [
-    projects,
-    activeProjectFolders,
-    activeProjectRequests,
-    handlers,
-    activeProjectId,
-  ]);
+    return buildFolderNodes(null, activeWorkspaceId);
+  }, [activeWorkspaceFolders, activeWorkspaceRequests, handlers, activeWorkspaceId]);
 
   // 5. Render Modals
   const WorkspaceModals = (
     <>
-      <CreateProjectModal
+      <CreateWorkspaceModal
         isOpen={isProjectModalOpen}
         onClose={() => setProjectModalOpen(false)}
       />
 
-      {folderModalState.isOpen && folderModalState.projectId && (
+      {folderModalState.isOpen && folderModalState.workspaceId && (
         <CreateFolderModal
           isOpen={folderModalState.isOpen}
           onClose={() => setFolderModalState({ isOpen: false })}
-          projectId={folderModalState.projectId}
+          workspaceId={folderModalState.workspaceId}
           parentFolderId={folderModalState.parentFolderId}
         />
       )}
 
-      {requestModalState.isOpen && requestModalState.projectId && (
+      {requestModalState.isOpen && requestModalState.workspaceId && (
         <CreateRequestModal
           isOpen={requestModalState.isOpen}
           onClose={() => setRequestModalState({ isOpen: false })}
-          projectId={requestModalState.projectId}
+          workspaceId={requestModalState.workspaceId}
           folderId={requestModalState.folderId}
         />
       )}
@@ -205,5 +188,10 @@ export const useWorkspaceTree = () => {
     nodes,
     WorkspaceModals,
     onNewProject: () => setProjectModalOpen(true),
+    onNewFolder: () => {
+      if (activeWorkspaceId) {
+        setFolderModalState({ isOpen: true, workspaceId: activeWorkspaceId });
+      }
+    },
   };
 };

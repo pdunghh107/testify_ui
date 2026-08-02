@@ -18,26 +18,27 @@ const InputContainer = styled.div`
 `;
 
 const Label = styled.label`
+  margin-bottom: 6px;
+
   font-family: ${({ theme }) => theme.fonts.family.base};
   font-size: ${({ theme }) => theme.fonts.size.small};
   font-weight: ${({ theme }) => theme.fonts.weight.medium};
   color: ${({ theme }) => theme.colors.textMain};
-  margin-bottom: 6px;
 `;
 
 const HelperMessage = styled.p<{ $isError?: boolean }>`
+  margin-top: 4px;
   font-family: ${({ theme }) => theme.fonts.family.base};
   font-size: ${({ theme }) => theme.fonts.size.small};
   color: ${({ theme, $isError }) =>
     $isError ? theme.colors.danger : theme.colors.textMuted};
-  margin-top: 4px;
 `;
 
 const HighlightMark = styled.mark`
-  background: ${({ theme }) => theme.colors.warningLight || "#fef08a"};
-  color: ${({ theme }) => theme.colors.textMain};
-  border-radius: 2px;
   padding: 0 1px;
+  border-radius: 2px;
+  color: ${({ theme }) => theme.colors.textMain};
+  background: ${({ theme }) => theme.colors.warningLight || "#fef08a"};
 `;
 
 const highlightMatch = (label: string, query: string) => {

@@ -1,7 +1,11 @@
-import { InputField, type RHFInputProps } from "./InputField";
 import { Search } from "lucide-react";
 
-export type SearchInputProps = Omit<RHFInputProps, "leftIcon" | "type" | "leftIconClickable">;
+import { InputField, type RHFInputProps } from "./InputField";
+
+export type SearchInputProps = Omit<
+  RHFInputProps,
+  "leftIcon" | "type" | "leftIconClickable"
+>;
 
 export function SearchInput(props: SearchInputProps) {
   return (

@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout.index'
@@ -16,8 +17,13 @@ import { Route as LayoutRuleConfigsRouteImport } from './routes/_layout.rule-con
 import { Route as LayoutConfigRouteImport } from './routes/_layout.config'
 import { Route as LayoutRequestsRequestIdRouteImport } from './routes/_layout.requests.$requestId'
 import { Route as LayoutFoldersFolderIdRouteImport } from './routes/_layout.folders.$folderId'
-import { Route as LayoutProjectsProjectIdIndexRouteImport } from './routes/_layout.projects.$projectId.index'
+import { Route as LayoutWorkspacesWorkspaceIdIndexRouteImport } from './routes/_layout.workspaces.$workspaceId.index'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -52,80 +58,94 @@ const LayoutFoldersFolderIdRoute = LayoutFoldersFolderIdRouteImport.update({
   path: '/folders/$folderId',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutProjectsProjectIdIndexRoute =
-  LayoutProjectsProjectIdIndexRouteImport.update({
-    id: '/projects/$projectId/',
-    path: '/projects/$projectId/',
+const LayoutWorkspacesWorkspaceIdIndexRoute =
+  LayoutWorkspacesWorkspaceIdIndexRouteImport.update({
+    id: '/workspaces/$workspaceId/',
+    path: '/workspaces/$workspaceId/',
     getParentRoute: () => LayoutRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
   '/config': typeof LayoutConfigRoute
   '/rule-configs': typeof LayoutRuleConfigsRoute
   '/folders/$folderId': typeof LayoutFoldersFolderIdRoute
   '/requests/$requestId': typeof LayoutRequestsRequestIdRoute
-  '/projects/$projectId/': typeof LayoutProjectsProjectIdIndexRoute
+  '/workspaces/$workspaceId/': typeof LayoutWorkspacesWorkspaceIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
   '/config': typeof LayoutConfigRoute
   '/rule-configs': typeof LayoutRuleConfigsRoute
   '/': typeof LayoutIndexRoute
   '/folders/$folderId': typeof LayoutFoldersFolderIdRoute
   '/requests/$requestId': typeof LayoutRequestsRequestIdRoute
-  '/projects/$projectId': typeof LayoutProjectsProjectIdIndexRoute
+  '/workspaces/$workspaceId': typeof LayoutWorkspacesWorkspaceIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
   '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
   '/_layout/config': typeof LayoutConfigRoute
   '/_layout/rule-configs': typeof LayoutRuleConfigsRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/folders/$folderId': typeof LayoutFoldersFolderIdRoute
   '/_layout/requests/$requestId': typeof LayoutRequestsRequestIdRoute
-  '/_layout/projects/$projectId/': typeof LayoutProjectsProjectIdIndexRoute
+  '/_layout/workspaces/$workspaceId/': typeof LayoutWorkspacesWorkspaceIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/login'
+    | '/register'
     | '/config'
     | '/rule-configs'
     | '/folders/$folderId'
     | '/requests/$requestId'
-    | '/projects/$projectId/'
+    | '/workspaces/$workspaceId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
+    | '/register'
     | '/config'
     | '/rule-configs'
     | '/'
     | '/folders/$folderId'
     | '/requests/$requestId'
-    | '/projects/$projectId'
+    | '/workspaces/$workspaceId'
   id:
     | '__root__'
     | '/_layout'
     | '/login'
+    | '/register'
     | '/_layout/config'
     | '/_layout/rule-configs'
     | '/_layout/'
     | '/_layout/folders/$folderId'
     | '/_layout/requests/$requestId'
-    | '/_layout/projects/$projectId/'
+    | '/_layout/workspaces/$workspaceId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
   LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -175,11 +195,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutFoldersFolderIdRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/projects/$projectId/': {
-      id: '/_layout/projects/$projectId/'
-      path: '/projects/$projectId'
-      fullPath: '/projects/$projectId/'
-      preLoaderRoute: typeof LayoutProjectsProjectIdIndexRouteImport
+    '/_layout/workspaces/$workspaceId/': {
+      id: '/_layout/workspaces/$workspaceId/'
+      path: '/workspaces/$workspaceId'
+      fullPath: '/workspaces/$workspaceId/'
+      preLoaderRoute: typeof LayoutWorkspacesWorkspaceIdIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
   }
@@ -191,7 +211,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutFoldersFolderIdRoute: typeof LayoutFoldersFolderIdRoute
   LayoutRequestsRequestIdRoute: typeof LayoutRequestsRequestIdRoute
-  LayoutProjectsProjectIdIndexRoute: typeof LayoutProjectsProjectIdIndexRoute
+  LayoutWorkspacesWorkspaceIdIndexRoute: typeof LayoutWorkspacesWorkspaceIdIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
@@ -200,7 +220,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutFoldersFolderIdRoute: LayoutFoldersFolderIdRoute,
   LayoutRequestsRequestIdRoute: LayoutRequestsRequestIdRoute,
-  LayoutProjectsProjectIdIndexRoute: LayoutProjectsProjectIdIndexRoute,
+  LayoutWorkspacesWorkspaceIdIndexRoute: LayoutWorkspacesWorkspaceIdIndexRoute,
 }
 
 const LayoutRouteWithChildren =
@@ -209,6 +229,7 @@ const LayoutRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
   LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -28,11 +28,12 @@ const InputContainer = styled.div`
 `;
 
 const Label = styled.label`
+  margin-bottom: 6px;
+
   font-family: ${({ theme }) => theme.fonts.family.base};
   font-size: ${({ theme }) => theme.fonts.size.small};
   font-weight: ${({ theme }) => theme.fonts.weight.medium};
   color: ${({ theme }) => theme.colors.textMain};
-  margin-bottom: 6px;
 `;
 
 const InputWrapper = styled.div`
@@ -49,33 +50,37 @@ const StyledInput = styled.input<{
 }>`
   width: 100%;
   height: 40px;
-  border-radius: 6px;
-  font-family: ${({ theme }) => theme.fonts.family.base};
-  font-size: ${({ theme }) => theme.fonts.size.base};
-  color: ${({ theme }) => theme.colors.textMain};
-  background-color: ${({ theme, disabled }) =>
-    disabled ? theme.colors.backgroundHover : theme.colors.backgroundCard};
-  border: 1px solid
-    ${({ theme, $hasError }) =>
-      $hasError ? theme.colors.danger : theme.colors.borderDefault};
+  padding-right: ${({ $hasRightIcon }) => ($hasRightIcon ? "36px" : "12px")};
 
   /* Tính toán padding để tránh chữ đè lên Icon */
   padding-left: ${({ $hasLeftIcon }) => ($hasLeftIcon ? "36px" : "12px")};
-  padding-right: ${({ $hasRightIcon }) => ($hasRightIcon ? "36px" : "12px")};
+  border: 1px solid
+    ${({ theme, $hasError }) =>
+      $hasError ? theme.colors.danger : theme.colors.borderDefault};
+  border-radius: 6px;
+
+  font-family: ${({ theme }) => theme.fonts.family.base};
+  font-size: ${({ theme }) => theme.fonts.size.base};
+  color: ${({ theme }) => theme.colors.textMain};
+
+  background-color: ${({ theme, disabled }) =>
+    disabled ? theme.colors.backgroundHover : theme.colors.backgroundCard};
   outline: none;
+
   transition: all 0.2s ease-in-out;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.textMuted};
+  }
 
   &:focus {
     border-color: ${({ theme, $hasError }) =>
       $hasError ? theme.colors.danger : theme.colors.primary};
+
     /* Focus Ring Box Shadow xịn xò */
     box-shadow: 0 0 0 3px
       ${({ theme, $hasError }) =>
         $hasError ? theme.colors.dangerLight : theme.colors.primaryLight};
-  }
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.textMuted};
   }
 
   &:disabled {
@@ -95,11 +100,13 @@ const IconWrapper = styled.div<{
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+
   ${({ $position }) => ($position === "left" ? "left: 10px;" : "right: 10px;")}
-  color: ${({ theme }) => theme.colors.textMuted};
   display: flex;
   align-items: center;
   justify-content: center;
+
+  color: ${({ theme }) => theme.colors.textMuted};
 
   /* Nếu là icon có tương tác (nút bấm) thì bật pointer-events lên */
   pointer-events: ${({ $isClickable }) => ($isClickable ? "auto" : "none")};
@@ -107,11 +114,11 @@ const IconWrapper = styled.div<{
 `;
 
 const HelperMessage = styled.p<{ $isError?: boolean }>`
+  margin-top: 4px;
   font-family: ${({ theme }) => theme.fonts.family.base};
   font-size: ${({ theme }) => theme.fonts.size.small};
   color: ${({ theme, $isError }) =>
     $isError ? theme.colors.danger : theme.colors.textMuted};
-  margin-top: 4px;
 `;
 
 // --------------------------------------------------------

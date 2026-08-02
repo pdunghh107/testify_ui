@@ -1,10 +1,12 @@
 import { Menu } from "lucide-react";
-
-import { Flex } from "../flex/Flex";
-import { IconButton } from "../../../components/common/button/Button";
-import { UserProfileMenu } from "./UserProfileMenu";
 import styled from "styled-components";
+
+import { WorkspaceSelector } from "@/features/workspace/components/WorkspaceSelector";
 import { colors } from "@/styles/colors";
+
+import { IconButton } from "../../../components/common/button/Button";
+import { Flex } from "../flex/Flex";
+import { UserProfileMenu } from "./UserProfileMenu";
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -22,6 +24,7 @@ export const Header = ({ onToggleSidebar }: HeaderProps) => {
             onClick={onToggleSidebar}
           />
         </MobileMenuButton>
+        <WorkspaceSelector />
       </Flex>
 
       <Flex style={{ flex: 1 }} />
@@ -34,17 +37,20 @@ export const Header = ({ onToggleSidebar }: HeaderProps) => {
 };
 
 const HeaderWrapper = styled.header`
-  background: ${colors.backgroundCard};
-  border-bottom: 1px solid ${colors.borderLight};
   display: flex;
-  align-items: center;
-  padding: 4px 24px;
   flex-shrink: 0;
+  align-items: center;
+
+  padding: 4px 24px;
+  border-bottom: 1px solid ${colors.borderLight};
+
+  background: ${colors.backgroundCard};
 `;
 
 const MobileMenuButton = styled.div`
   display: flex;
-  @media (min-width: 1025px) {
+
+  @media (width >= 1025px) {
     display: none;
   }
 `;

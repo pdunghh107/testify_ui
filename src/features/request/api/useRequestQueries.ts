@@ -6,7 +6,7 @@ import { axiosClient } from "@/api/axiosClient";
 // Types
 export interface RequestResponse {
   id: string;
-  projectId: string;
+  workspaceId: string;
   folderId?: string;
   name: string;
   url: string;
@@ -19,7 +19,7 @@ export interface RequestResponse {
 }
 
 export interface CreateRequestPayload {
-  projectId: string;
+  workspaceId: string;
   folderId?: string;
   name: string;
   url: string;
@@ -30,15 +30,15 @@ export interface CreateRequestPayload {
 }
 
 // Queries
-export const useRequests = (projectId: string | null) => {
+export const useRequests = (workspaceId: string | null) => {
   return useQuery({
-    queryKey: ["requests", projectId],
+    queryKey: ["requests", workspaceId],
     queryFn: async (): Promise<RequestResponse[]> => {
-      if (!projectId) return [];
-      const { data } = await axiosClient.get(`/requests/project/${projectId}`);
+      if (!workspaceId) return [];
+      const { data } = await axiosClient.get(`/requests/workspace/${workspaceId}`);
       return data?.data ?? data;
     },
-    enabled: !!projectId,
+    enabled: !!workspaceId,
   });
 };
 
@@ -65,7 +65,7 @@ export const useCreateRequest = () => {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ["requests", variables.projectId],
+        queryKey: ["requests", variables.workspaceId],
       });
       toast.success("Tạo Request thành công");
     },
@@ -75,7 +75,7 @@ export const useCreateRequest = () => {
   });
 };
 
-export const useDeleteRequest = (projectId: string) => {
+export const useDeleteRequest = (workspaceId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -83,7 +83,7 @@ export const useDeleteRequest = (projectId: string) => {
       await axiosClient.delete(`/requests/${id}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["requests", projectId] });
+      queryClient.invalidateQueries({ queryKey: ["requests", workspaceId] });
       toast.success("Xóa Request thành công");
     },
     onError: () => {

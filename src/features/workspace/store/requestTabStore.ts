@@ -21,6 +21,7 @@ export interface RequestTab {
   logs?: any[]; // Lưu log SSE
   progress?: any;
   isLoading?: boolean;
+  workspaceId?: string;
 }
 
 interface RequestTabState {

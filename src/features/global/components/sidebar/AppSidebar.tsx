@@ -30,8 +30,8 @@ export const AppSidebar = ({
     >
       <Sidebar.Header>
         <img
-          src={collapsed ? "/logo-icon.png" : "/logo-full.png"}
-          alt="CRM Logo"
+          src="/testify_final_logo.png"
+          alt="Testify Logo"
           height={32}
           style={{ objectFit: "contain" }}
         />

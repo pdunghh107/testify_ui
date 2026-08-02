@@ -1,22 +1,26 @@
+import { FloatingPortal } from "@floating-ui/react";
+import { Search, X } from "lucide-react";
 import * as React from "react";
 import styled from "styled-components";
-import { FloatingPortal } from "@floating-ui/react";
+
 import { useSelectContext } from "./SelectContext";
-import { Search, X } from "lucide-react";
 
 const DropdownContainer = styled.div`
-  background: ${({ theme }) => theme.colors.backgroundCard};
-  border: 1px solid ${({ theme }) => theme.colors.borderLight};
-  border-radius: 8px;
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.1),
-    0 2px 8px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
   z-index: 9999;
+
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+
   width: 100%;
+  max-height: 100%;
+  border: 1px solid ${({ theme }) => theme.colors.borderLight};
+  border-radius: 8px;
+
+  background: ${({ theme }) => theme.colors.backgroundCard};
+  box-shadow:
+    0 8px 24px rgb(0 0 0 / 10%),
+    0 2px 8px rgb(0 0 0 / 6%);
 `;
 
 const SearchWrapper = styled.div`
@@ -26,25 +30,30 @@ const SearchWrapper = styled.div`
 `;
 
 const SearchIcon = styled(Search)`
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: ${({ theme }) => theme.colors.textMuted};
   pointer-events: none;
+
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+
+  color: ${({ theme }) => theme.colors.textMuted};
 `;
 
 const SearchInput = styled.input`
-  width: 100%;
   box-sizing: border-box;
+  width: 100%;
   padding: 6px 28px 6px 30px;
-  font-size: 13px;
-  font-family: inherit;
   border: 1px solid ${({ theme }) => theme.colors.borderDefault};
   border-radius: 6px;
-  outline: none;
-  background: ${({ theme }) => theme.colors.backgroundApp};
+
+  font-family: inherit;
+  font-size: 13px;
   color: ${({ theme }) => theme.colors.textMain};
+
+  background: ${({ theme }) => theme.colors.backgroundApp};
+  outline: none;
+
   transition: all 0.15s;
 
   &:focus {
@@ -54,36 +63,45 @@ const SearchInput = styled.input`
 `;
 
 const SearchClear = styled.button`
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: 2px;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.textMuted};
+
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+
   display: flex;
   align-items: center;
+
+  padding: 2px;
+  border: none;
   border-radius: 3px;
+
+  color: ${({ theme }) => theme.colors.textMuted};
+
+  background: none;
+
   &:hover {
     color: ${({ theme }) => theme.colors.textMain};
   }
 `;
 
 const List = styled.ul`
-  list-style: none;
-  padding: 4px;
-  margin: 0;
   overflow-y: auto;
   flex: 1;
+
+  margin: 0;
+  padding: 4px;
+
+  list-style: none;
 
   &::-webkit-scrollbar {
     width: 6px;
   }
+
   &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.borderDefault};
     border-radius: 4px;
+    background: ${({ theme }) => theme.colors.borderDefault};
   }
 `;
 
@@ -143,7 +161,15 @@ export const SelectDropdown = React.forwardRef<
 
     return (
       <FloatingPortal>
-        <div ref={ref} style={{ ...floatingStyles, zIndex: 9999, display: "flex", flexDirection: "column" }}>
+        <div
+          ref={ref}
+          style={{
+            ...floatingStyles,
+            zIndex: 9999,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <DropdownContainer
             style={{ ...style, ...transitionStyles }}
             {...props}

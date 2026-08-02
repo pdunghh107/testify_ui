@@ -1,15 +1,16 @@
-import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, Lock } from "lucide-react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, Link } from "@tanstack/react-router";
+import { Lock, Mail } from "lucide-react";
+import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+
+import { Button } from "../../../components/common/button/Button";
 import { InputField } from "../../../components/form/InputField";
 import { PasswordInput } from "../../../components/form/PasswordInput";
-import { Button } from "../../../components/common/button/Button";
-import { loginSchema, type LoginFormData } from "../validations/login-schema";
 import { useCrmLogin } from "../api/useLogin";
 import { LOGIN_FEATURES } from "../constants/loginFeatures";
+import { type LoginFormData, loginSchema } from "../validations/login-schema";
 import * as S from "./LoginForm.styles";
-import { toast } from "react-hot-toast";
 
 export const LoginForm = () => {
   const navigate = useNavigate();
@@ -40,19 +41,11 @@ export const LoginForm = () => {
     <S.LoginPageWrapper>
       <S.LoginLeftPanel>
         <S.LoginContentWrapper>
-          <S.LoginLogoContainer>
-            <S.LoginLogoBox>
-              <S.LoginLogoImg src="/logo-icon.png" alt="FizaHUB" />
-            </S.LoginLogoBox>
-            <div>
-              <S.LoginAppName>FizaHUB CRM</S.LoginAppName>
-              <S.LoginAppSubtitle>Super Admin Dashboard</S.LoginAppSubtitle>
-            </div>
-          </S.LoginLogoContainer>
 
-          <S.LoginTitle>Chào mừng trở lại</S.LoginTitle>
+
+          <S.LoginTitle>Chào mừng đến với Testify</S.LoginTitle>
           <S.LoginSubtitle>
-            Đăng nhập để truy cập vào hệ thống quản trị CRM.
+            Đăng nhập để sử dụng công cụ kiểm thử API tự động.
           </S.LoginSubtitle>
 
           <S.LoginFeaturesList>
@@ -73,8 +66,7 @@ export const LoginForm = () => {
 
       <S.LoginRightPanel>
         <S.LoginFormBox>
-          <S.LoginRightLogo src="/logo-full.png" alt="FizaHUB CRM" />
-          <S.LoginFormSubtitle>Đăng nhập vào hệ thống</S.LoginFormSubtitle>
+          <S.LoginRightLogo src="/testify_final_logo.png" alt="Testify" />
 
           <FormProvider {...methods}>
             <S.StyledForm onSubmit={handleSubmit(onSubmit)}>
@@ -105,19 +97,16 @@ export const LoginForm = () => {
                 Đăng nhập
               </Button>
 
-              <S.LoginDemoBox>
-                <strong>Tài khoản Demo</strong> <br />
-                admin@fizahub.com / Password@123
-              </S.LoginDemoBox>
+              <div style={{ textAlign: "center", marginTop: "16px", fontSize: "14px", color: "#64748b" }}>
+                Chưa có tài khoản? <Link to="/register" style={{ color: "#3b82f6", fontWeight: 600, textDecoration: "none" }}>Đăng ký ngay</Link>
+              </div>
 
-              <S.LoginForgotBox>
-                🔐 <strong>Quên mật khẩu?</strong>
-                <br />
-                Vui lòng liên hệ Admin để cấp lại mật khẩu mới.
-              </S.LoginForgotBox>
+              <div style={{ textAlign: "center", marginTop: "16px" }}>
+                <Link to="/forgot-password" style={{ color: "#94a3b8", fontSize: "14px", textDecoration: "none" }}>Forgot password?</Link>
+              </div>
 
               <S.LoginCopyright>
-                © 2026 FizaHUB. All rights reserved.
+                © 2026 Testify. All rights reserved.
               </S.LoginCopyright>
             </S.StyledForm>
           </FormProvider>

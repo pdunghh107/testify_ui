@@ -1,80 +1,102 @@
+import { ChevronDown, X } from "lucide-react";
 import * as React from "react";
 import styled from "styled-components";
-import { ChevronDown, X } from "lucide-react";
+
 import { useSelectContext } from "./SelectContext";
 
-const TriggerButton = styled.button<{ $isOpen: boolean; $hasError?: boolean; $isSm?: boolean }>`
+const TriggerButton = styled.button<{
+  $isOpen: boolean;
+  $hasError?: boolean;
+  $isSm?: boolean;
+}>`
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  user-select: none;
+
   display: flex;
+  gap: 6px;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
+
   width: 100%;
-  padding: ${({ $isSm }) => ($isSm ? "5px 8px 5px 10px" : "8px 10px 8px 12px")};
+  min-width: 0;
   min-height: ${({ $isSm }) => ($isSm ? "32px" : "40px")};
-  background: ${({ theme, disabled }) => (disabled ? theme.colors.backgroundHover : theme.colors.backgroundCard)};
-  border: 1px solid ${({ theme, $hasError }) => ($hasError ? theme.colors.danger : theme.colors.borderDefault)};
+  padding: ${({ $isSm }) => ($isSm ? "5px 8px 5px 10px" : "8px 10px 8px 12px")};
+  border: 1px solid
+    ${({ theme, $hasError }) =>
+      $hasError ? theme.colors.danger : theme.colors.borderDefault};
   border-radius: 6px;
+
   font-family: ${({ theme }) => theme.fonts.family.base};
   font-size: ${({ theme, $isSm }) => ($isSm ? "13px" : theme.fonts.size.base)};
   color: ${({ theme }) => theme.colors.textMain};
-  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   text-align: left;
-  outline: none;
-  transition: all 0.2s ease-in-out;
   white-space: nowrap;
-  user-select: none;
-  min-width: 0;
+
+  background: ${({ theme, disabled }) =>
+    disabled ? theme.colors.backgroundHover : theme.colors.backgroundCard};
+  outline: none;
+
+  transition: all 0.2s ease-in-out;
 
   &:hover:not(:disabled) {
-    border-color: ${({ theme, $hasError }) => ($hasError ? theme.colors.danger : theme.colors.primary)};
+    border-color: ${({ theme, $hasError }) =>
+      $hasError ? theme.colors.danger : theme.colors.primary};
     background: ${({ theme }) => theme.colors.backgroundApp};
   }
 
   &:focus-visible,
   &[data-open="true"] {
-    border-color: ${({ theme, $hasError }) => ($hasError ? theme.colors.danger : theme.colors.primary)};
-    box-shadow: 0 0 0 3px ${({ theme, $hasError }) => ($hasError ? theme.colors.dangerLight : theme.colors.primaryLight)};
+    border-color: ${({ theme, $hasError }) =>
+      $hasError ? theme.colors.danger : theme.colors.primary};
+    box-shadow: 0 0 0 3px
+      ${({ theme, $hasError }) =>
+        $hasError ? theme.colors.dangerLight : theme.colors.primaryLight};
   }
 `;
 
 const ContentWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  min-width: 0;
   overflow: hidden;
+  display: flex;
+  flex: 1;
+  align-items: center;
+
+  min-width: 0;
 `;
 
 const LabelSpan = styled.span<{ $isPlaceholder?: boolean }>`
-  flex: 1;
   overflow: hidden;
+  display: block;
+  flex: 1;
+
+  min-width: 0;
+
+  color: ${({ theme, $isPlaceholder }) =>
+    $isPlaceholder ? theme.colors.textMuted : "inherit"};
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: block;
-  min-width: 0;
-  color: ${({ theme, $isPlaceholder }) => ($isPlaceholder ? theme.colors.textMuted : "inherit")};
 `;
 
 const ActionsWrapper = styled.div`
   display: flex;
-  align-items: center;
-  gap: 8px;
   flex-shrink: 0;
+  gap: 8px;
+  align-items: center;
 `;
 
 const ClearButton = styled(X)`
-  color: ${({ theme }) => theme.colors.textMuted};
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.textMuted};
   transition: color 0.15s;
+
   &:hover {
     color: ${({ theme }) => theme.colors.danger};
   }
 `;
 
 const StyledChevron = styled(ChevronDown)<{ $isOpen: boolean }>`
+  transform: ${({ $isOpen }) => ($isOpen ? "rotate(180deg)" : "rotate(0deg)")};
   color: ${({ theme }) => theme.colors.textMuted};
   transition: transform 0.2s ease;
-  transform: ${({ $isOpen }) => ($isOpen ? "rotate(180deg)" : "rotate(0deg)")};
 `;
 
 export interface SelectTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -84,9 +106,23 @@ export interface SelectTriggerProps extends React.ButtonHTMLAttributes<HTMLButto
   clearable?: boolean;
 }
 
-export const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
-  ({ placeholder = "Chọn...", isError, size = "md", clearable = false, className, ...props }, ref) => {
-    const { open, value, multiple, options, onChange, setOpen } = useSelectContext();
+export const SelectTrigger = React.forwardRef<
+  HTMLButtonElement,
+  SelectTriggerProps
+>(
+  (
+    {
+      placeholder = "Chọn...",
+      isError,
+      size = "md",
+      clearable = false,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const { open, value, multiple, options, onChange, setOpen } =
+      useSelectContext();
     const isSm = size === "sm";
 
     // Compute display label
@@ -139,7 +175,7 @@ export const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerPr
         </ActionsWrapper>
       </TriggerButton>
     );
-  }
+  },
 );
 
 SelectTrigger.displayName = "SelectTrigger";

@@ -1,53 +1,75 @@
+import { Check } from "lucide-react";
 import * as React from "react";
 import styled from "styled-components";
-import { Check } from "lucide-react";
+
 import { useSelectContext } from "./SelectContext";
 
-const OptionLi = styled.li<{ $active: boolean; $selected: boolean; $disabled: boolean }>`
+const OptionLi = styled.li<{
+  $active: boolean;
+  $selected: boolean;
+  $disabled: boolean;
+}>`
+  cursor: ${({ $disabled }) => ($disabled ? "not-allowed" : "pointer")};
+
   display: flex;
+  gap: 8px;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+
   padding: 8px 10px;
   border-radius: 6px;
+
   font-size: 13.5px;
-  color: ${({ theme, $disabled }) => ($disabled ? theme.colors.textDisabled : theme.colors.textMain)};
-  cursor: ${({ $disabled }) => ($disabled ? "not-allowed" : "pointer")};
-  outline: none;
+  color: ${({ theme, $disabled }) =>
+    $disabled ? theme.colors.textDisabled : theme.colors.textMain};
+
   background: ${({ theme, $active, $selected }) =>
-    $active ? theme.colors.backgroundHover : $selected ? theme.colors.primaryLight : "transparent"};
-  
+    $active
+      ? theme.colors.backgroundHover
+      : $selected
+        ? theme.colors.primaryLight
+        : "transparent"};
+  outline: none;
+
   &:hover {
-    background: ${({ theme, $disabled }) => ($disabled ? "transparent" : theme.colors.backgroundHover)};
+    background: ${({ theme, $disabled }) =>
+      $disabled ? "transparent" : theme.colors.backgroundHover};
   }
 `;
 
 const ContentWrapper = styled.div`
   display: flex;
-  align-items: center;
-  gap: 10px;
   flex: 1;
+  gap: 10px;
+  align-items: center;
 `;
 
 const CheckboxBox = styled.div<{ $checked: boolean }>`
-  width: 16px;
-  height: 16px;
-  border: 1.5px solid ${({ theme, $checked }) => ($checked ? theme.colors.primary : theme.colors.borderDefault)};
-  border-radius: 4px;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  background: ${({ theme, $checked }) => ($checked ? theme.colors.primary : theme.colors.backgroundCard)};
+
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid
+    ${({ theme, $checked }) =>
+      $checked ? theme.colors.primary : theme.colors.borderDefault};
+  border-radius: 4px;
+
   color: white;
-  flex-shrink: 0;
+
+  background: ${({ theme, $checked }) =>
+    $checked ? theme.colors.primary : theme.colors.backgroundCard};
+
   transition: all 0.15s;
 `;
 
 const OptionLabel = styled.span`
-  flex: 1;
-  white-space: nowrap;
   overflow: hidden;
+  flex: 1;
   text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export interface SelectOptionProps extends React.LiHTMLAttributes<HTMLLIElement> {
@@ -69,7 +91,7 @@ export const SelectOption = React.forwardRef<HTMLLIElement, SelectOptionProps>(
     } = useSelectContext();
 
     const isActive = activeIndex === index;
-    
+
     // Check if this option is selected
     const isSelected = React.useMemo(() => {
       if (multiple && Array.isArray(contextValue)) {
@@ -128,12 +150,10 @@ export const SelectOption = React.forwardRef<HTMLLIElement, SelectOptionProps>(
           )}
           <OptionLabel>{children}</OptionLabel>
         </ContentWrapper>
-        {!multiple && isSelected && (
-          <Check size={14} color="var(--primary)" />
-        )}
+        {!multiple && isSelected && <Check size={14} color="var(--primary)" />}
       </OptionLi>
     );
-  }
+  },
 );
 
 SelectOption.displayName = "SelectOption";

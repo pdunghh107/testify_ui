@@ -69,7 +69,7 @@ export const Accordion: React.FC<AccordionProps> = ({
   };
 
   const handleHeaderClick = (e: React.MouseEvent) => {
-    // Nếu có onClick (chọn project/thư mục), gọi onClick. 
+    // Nếu có onClick (chọn workspace/thư mục), gọi onClick. 
     // Nếu chưa mở, mở nó ra luôn.
     if (onClick) {
       onClick();

@@ -2,7 +2,7 @@ import { axiosClient } from "./axiosClient";
 
 export interface Folder {
   id: string;
-  projectId: string;
+  workspaceId: string;
   parentFolderId: string | null;
   name: string;
   depthLevel: number;
@@ -11,19 +11,19 @@ export interface Folder {
   updatedAt: string;
 }
 
-export const getFolders = async (projectId: string): Promise<Folder[]> => {
-  const { data } = await axiosClient.get(`/projects/${projectId}/folders`);
+export const getFolders = async (workspaceId: string): Promise<Folder[]> => {
+  const { data } = await axiosClient.get(`/workspaces/${workspaceId}/folders`);
   return data?.data || data;
 };
 
 export const createFolder = async (
-  projectId: string,
+  workspaceId: string,
   payload: { name: string; parentFolderId?: string | null }
 ): Promise<Folder> => {
-  const { data } = await axiosClient.post(`/projects/${projectId}/folders`, payload);
+  const { data } = await axiosClient.post(`/workspaces/${workspaceId}/folders`, payload);
   return data?.data || data;
 };
 
-export const deleteFolder = async (projectId: string, folderId: string): Promise<void> => {
-  await axiosClient.delete(`/projects/${projectId}/folders/${folderId}`);
+export const deleteFolder = async (workspaceId: string, folderId: string): Promise<void> => {
+  await axiosClient.delete(`/workspaces/${workspaceId}/folders/${folderId}`);
 };

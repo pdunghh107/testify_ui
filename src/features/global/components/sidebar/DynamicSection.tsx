@@ -3,22 +3,22 @@ import { Plus } from "lucide-react";
 
 import { Sidebar, type SidebarNode } from "@/components/layout/sidebar";
 import { useWorkspaceTree } from "@/features/workspace/hooks/useWorkspaceTree";
-import { useProjectStore } from "@/store/projectStore";
+import { useProjectStore } from "@/store/workspaceStore";
 
 export const DynamicSection = () => {
-  const { nodes, WorkspaceModals, onNewProject } = useWorkspaceTree();
+  const { nodes, WorkspaceModals, onNewFolder } = useWorkspaceTree();
 
-  const { activeProjectId, setActiveProject, activeFolderId, setActiveFolder } =
+  const { activeWorkspaceId, setActiveWorkspace, activeFolderId, setActiveFolder } =
     useProjectStore();
-  const activeNodeId = activeFolderId || activeProjectId || null;
+  const activeNodeId = activeFolderId || activeWorkspaceId || null;
   const navigate = useNavigate();
 
   const handleNodeSelect = (id: string, node: SidebarNode) => {
-    if (node.originalData?.type === "project") {
-      setActiveProject(id);
+    if (node.originalData?.type === "workspace") {
+      setActiveWorkspace(id);
       navigate({
-        to: "/projects/$projectId",
-        params: { projectId: id },
+        to: "/workspaces/$workspaceId",
+        params: { workspaceId: id },
       });
     } else if (node.originalData?.type === "folder") {
       setActiveFolder(id);
@@ -43,14 +43,16 @@ export const DynamicSection = () => {
       <Sidebar.Group isFirst>
         <Sidebar.GroupLabel
           action={
-            <Sidebar.Action
-              onClick={onNewProject}
-              icon={<Plus size={16} />}
-              aria-label="Tạo dự án"
-            />
+            activeWorkspaceId ? (
+              <Sidebar.Action
+                onClick={onNewFolder}
+                icon={<Plus size={16} />}
+                aria-label="Tạo thư mục"
+              />
+            ) : undefined
           }
         >
-          Dự án của bạn
+          Thư mục
         </Sidebar.GroupLabel>
 
         <Sidebar.Tree

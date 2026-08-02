@@ -1,22 +1,31 @@
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import styled from "styled-components";
-import { InputField, type RHFInputProps } from "./InputField";
-import { Eye, EyeOff } from "lucide-react";
 
-export type PasswordInputProps = Omit<RHFInputProps, "type" | "rightIcon" | "rightIconClickable">;
+import { InputField, type RHFInputProps } from "./InputField";
+
+export type PasswordInputProps = Omit<
+  RHFInputProps,
+  "type" | "rightIcon" | "rightIconClickable"
+>;
 
 const ToggleButton = styled.button`
-  background: none;
-  border: none;
-  padding: 4px;
+  cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding: 4px;
+  border: none;
+
   color: inherit;
-  cursor: pointer;
+
+  background: none;
 
   &:focus {
     outline: none;
+
     /* Có thể thêm hiệu ứng focus sau này */
   }
 `;

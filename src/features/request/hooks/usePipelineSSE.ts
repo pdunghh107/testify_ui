@@ -76,7 +76,7 @@ export function usePipelineSSE(initialData?: any): UsePipelineSSEReturn {
           // Xử lý các event type từ backend
           if (event.event === "START") {
             const data = JSON.parse(event.data);
-            setProgress((prev) => ({ ...prev, total: data.totalCases || 0 }));
+            setProgress((prev: any) => ({ ...prev, total: data.totalCases || 0 }));
             addLog(`Bắt đầu chạy ${data.totalCases} cases hoán vị...`, "info");
           } else if (event.event === "LOG_EVENT") {
             const data = JSON.parse(event.data);
@@ -89,7 +89,7 @@ export function usePipelineSSE(initialData?: any): UsePipelineSSEReturn {
             );
 
             // Cập nhật Progress
-            setProgress((prev) => ({
+            setProgress((prev: any) => ({
               ...prev,
               current: prev.current + 1,
               hasError: prev.hasError || isError,

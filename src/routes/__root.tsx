@@ -6,8 +6,10 @@ export const Route = createRootRoute({
   beforeLoad: ({ location }) => {
     const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
+    const publicRoutes = ["/login", "/register", "/forgot-password"];
+
     // Chưa đăng nhập mà muốn vào trang bảo mật -> đẩy ra /login
-    if (!isAuthenticated && location.pathname !== "/login") {
+    if (!isAuthenticated && !publicRoutes.includes(location.pathname)) {
       throw redirect({
         to: "/login",
         search: {
@@ -16,8 +18,8 @@ export const Route = createRootRoute({
       });
     }
 
-    // Đã đăng nhập mà muốn vào /login -> đẩy ra Home
-    if (isAuthenticated && location.pathname === "/login") {
+    // Đã đăng nhập mà muốn vào public routes -> đẩy ra Home
+    if (isAuthenticated && publicRoutes.includes(location.pathname)) {
       throw redirect({
         to: "/",
       });

@@ -1,5 +1,5 @@
-import * as React from "react";
 import type { useInteractions } from "@floating-ui/react";
+import * as React from "react";
 
 export interface SelectOptionType {
   value: string;
@@ -17,7 +17,7 @@ export interface SelectContextType {
   getItemProps: ReturnType<typeof useInteractions>["getItemProps"];
   activeIndexRef: React.MutableRefObject<number | null>;
   listRef: React.MutableRefObject<Array<HTMLElement | null>>;
-  
+
   // Custom props
   value: string | string[] | undefined;
   onChange: (value: string | string[]) => void;

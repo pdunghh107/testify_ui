@@ -1,8 +1,8 @@
 import { ShieldCheck, Users, BarChart3, Settings } from "lucide-react";
 
 export const LOGIN_FEATURES = [
-  { icon: ShieldCheck, text: "Quản trị hệ thống toàn diện" },
-  { icon: Users, text: "Quản lý Hộ kinh doanh Đà Nẵng" },
-  { icon: BarChart3, text: "Báo cáo doanh thu & tăng trưởng" },
-  { icon: Settings, text: "Cấu hình nền tảng Multi-Tenant" },
+  { icon: ShieldCheck, text: "Quản lý và tổ chức Request dễ dàng" },
+  { icon: Users, text: "Hoán vị tham số API tự động" },
+  { icon: BarChart3, text: "Chạy Pipeline kiểm thử thời gian thực" },
+  { icon: Settings, text: "Thiết lập cấu hình rules linh hoạt" },
 ];

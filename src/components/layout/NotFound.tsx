@@ -1,6 +1,7 @@
-import styled from "styled-components";
 import { Link } from "@tanstack/react-router";
 import { AlertCircle } from "lucide-react";
+import styled from "styled-components";
+
 import { PrimaryButton } from "../common/button/Button";
 import { Text } from "../common/text/Text";
 import { Flex } from "./flex/Flex";

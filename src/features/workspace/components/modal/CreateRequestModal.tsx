@@ -19,14 +19,14 @@ type CreateRequestFormValues = z.infer<typeof createRequestSchema>;
 interface CreateRequestModalProps {
   isOpen: boolean;
   onClose: () => void;
-  projectId: string;
+  workspaceId: string;
   folderId?: string;
 }
 
 export function CreateRequestModal({
   isOpen,
   onClose,
-  projectId,
+  workspaceId,
   folderId,
 }: CreateRequestModalProps) {
   const formRef = useRef<FormInstance>(null);
@@ -34,7 +34,7 @@ export function CreateRequestModal({
 
   const onSubmit = async (data: CreateRequestFormValues) => {
     await createRequest.mutateAsync({
-      projectId,
+      workspaceId,
       folderId,
       name: data.name,
       url: data.url,

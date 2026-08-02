@@ -3,7 +3,7 @@ import { z } from "zod";
 import { Modal } from "@/components/overlay/modal/Modal";
 import { Form, type FormInstance } from "@/components/form/Form";
 import { InputField } from "@/components/form/InputField";
-import { useCreateFolder } from "../../api/useProjectQueries";
+import { useCreateFolder } from "../../api/useWorkspaceQueries";
 
 const schema = z.object({
   name: z.string().min(1, "Vui lòng nhập tên folder"),
@@ -14,16 +14,16 @@ type FormValues = z.infer<typeof schema>;
 export const CreateFolderModal = ({
   isOpen,
   onClose,
-  projectId,
+  workspaceId,
   parentFolderId,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  projectId: string;
+  workspaceId: string;
   parentFolderId?: string | null;
 }) => {
   const formRef = useRef<FormInstance>(null);
-  const createFolder = useCreateFolder(projectId);
+  const createFolder = useCreateFolder(workspaceId);
 
   const handleSubmit = (data: FormValues) => {
     createFolder.mutate(

@@ -56,6 +56,9 @@ const highlightMatch = (label: string, query: string) => {
   );
 };
 
+/**
+ * Cấu hình Props cho component SelectField.
+ */
 export interface RHFSelectFieldProps {
   name: string; // Mandatory for RHF
   label?: string | ReactNode;
@@ -75,6 +78,26 @@ export interface RHFSelectFieldProps {
   size?: "sm" | "md";
 }
 
+/**
+ * Component SelectField chuyên dụng cho Form (React Hook Form).
+ * Kết hợp logic validate của RHF với giao diện Select Dropdown (có thể tìm kiếm, chọn nhiều).
+ *
+ * @example
+ * ```tsx
+ * const options = [
+ *   { label: 'Việt Nam', value: 'vn' },
+ *   { label: 'Hoa Kỳ', value: 'us' }
+ * ];
+ * 
+ * // Dùng bên trong <Form>
+ * <SelectField 
+ *   name="country" 
+ *   label="Quốc gia" 
+ *   options={options} 
+ *   searchable 
+ * />
+ * ```
+ */
 export function SelectField({
   name,
   label,

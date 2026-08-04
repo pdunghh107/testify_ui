@@ -1,12 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SegmentedRoot, SegmentedButton, SegmentedIndicator } from "./SegmentedControl.styles";
 
+import {
+  SegmentedButton,
+  SegmentedIndicator,
+  SegmentedRoot,
+} from "./SegmentedControl.styles";
+
+/**
+ * Cấu hình tuỳ chọn cho SegmentedControl.
+ */
 export interface SegmentedOption {
   label: React.ReactNode;
   value: string;
   disabled?: boolean;
 }
 
+/**
+ * Cấu hình Props cho component SegmentedControl.
+ */
 export interface SegmentedControlProps {
   options: SegmentedOption[];
   value: string;
@@ -15,6 +26,21 @@ export interface SegmentedControlProps {
   id?: string;
 }
 
+/**
+ * Component SegmentedControl hiển thị một tập hợp các nút chuyển đổi ngang (giống tabs hoặc radio group).
+ * Hỗ trợ hiệu ứng trượt mượt mà (sliding indicator) khi thay đổi lựa chọn.
+ *
+ * @example
+ * ```tsx
+ * const options = [
+ *   { label: 'Ngày', value: 'day' },
+ *   { label: 'Tháng', value: 'month' },
+ * ];
+ * const [view, setView] = useState('day');
+ *
+ * <SegmentedControl options={options} value={view} onChange={setView} />
+ * ```
+ */
 export const SegmentedControl: React.FC<SegmentedControlProps> = ({
   options,
   value,
@@ -28,7 +54,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
 
   const updateIndicator = () => {
     if (!rootRef.current) return;
-    
+
     // Find the button element that corresponds to the active value
     const activeIndex = options.findIndex((opt) => opt.value === value);
     if (activeIndex === -1) return;
@@ -37,7 +63,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
     // Or we can just use querySelectorAll for the buttons
     const buttons = rootRef.current.querySelectorAll("button[role='radio']");
     const activeButton = buttons[activeIndex] as HTMLButtonElement | undefined;
-    
+
     if (activeButton) {
       setIndicatorStyle({
         width: activeButton.offsetWidth,
@@ -55,7 +81,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
 
   useEffect(() => {
     updateIndicator();
-    
+
     // Also update on window resize
     window.addEventListener("resize", updateIndicator);
     return () => {
@@ -79,9 +105,9 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
       id={id}
       role="radiogroup"
     >
-      <SegmentedIndicator 
-        $width={indicatorStyle.width} 
-        $left={indicatorStyle.left} 
+      <SegmentedIndicator
+        $width={indicatorStyle.width}
+        $left={indicatorStyle.left}
         $isVisible={isReady}
       />
       {options.map((opt) => (

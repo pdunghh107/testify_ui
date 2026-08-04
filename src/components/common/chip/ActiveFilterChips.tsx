@@ -3,6 +3,9 @@ import { FilterChip } from "./FilterChip";
 import type { FilterChipData } from "../../../hooks/useMappedFilterChips";
 import { colors } from "../../../styles/colors";
 
+/**
+ * Cấu hình Props cho component ActiveFilterChips.
+ */
 interface ActiveFilterChipsProps {
   chips: FilterChipData[];
   onRemove: (key: string) => void;
@@ -37,6 +40,21 @@ const ClearAllButton = styled.button`
   }
 `;
 
+/**
+ * Component ActiveFilterChips dùng để hiển thị danh sách các bộ lọc (filter) đang được áp dụng.
+ * Cho phép người dùng xóa từng bộ lọc riêng lẻ hoặc xóa tất cả cùng lúc.
+ *
+ * @example
+ * ```tsx
+ * const chips = [{ key: 'status', label: 'Trạng thái', displayValue: 'Hoạt động' }];
+ * 
+ * <ActiveFilterChips 
+ *   chips={chips} 
+ *   onRemove={(key) => handleRemove(key)} 
+ *   onClearAll={handleClearAll} 
+ * />
+ * ```
+ */
 export function ActiveFilterChips({
   chips,
   onRemove,

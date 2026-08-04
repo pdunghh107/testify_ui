@@ -240,6 +240,16 @@ export const DefaultCell = <T,>({
   );
 };
 
+/**
+ * Trình phân phối (dispatcher) Component Cell.
+ * Dựa vào `col.type`, hàm này sẽ quyết định render component con tương ứng (như AvatarCell, ActionCell, v.v.).
+ * Thường được dùng ngầm bên trong `DataTable`.
+ *
+ * @example
+ * ```tsx
+ * const cellUI = renderCellContent(colConfig, rowData, cellValue);
+ * ```
+ */
 export const renderCellContent = <T,>(
   col: DataTableColumn<T>,
   row: T,

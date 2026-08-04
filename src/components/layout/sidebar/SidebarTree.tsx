@@ -13,6 +13,9 @@ import {
 } from "./SidebarCollapsible";
 import { SidebarItem } from "./SidebarItem";
 
+/**
+ * Cấu hình Hành động (Actions) cho một Node trong SidebarTree.
+ */
 export interface ActionConfig<T = any> {
   label: string;
   icon?: React.ElementType;
@@ -21,6 +24,9 @@ export interface ActionConfig<T = any> {
   hidden?: boolean;
 }
 
+/**
+ * Cấu trúc dữ liệu của một Node trong SidebarTree.
+ */
 export interface SidebarNode {
   id: string;
   label: string;
@@ -30,12 +36,26 @@ export interface SidebarNode {
   originalData?: any;
 }
 
+/**
+ * Cấu hình Props cho SidebarTree.
+ */
 export interface SidebarTreeProps {
   data: SidebarNode[];
   activeId?: string | null;
   onNodeSelect?: (id: string, node: SidebarNode) => void;
 }
 
+/**
+ * Component render đệ quy một cấu trúc thư mục dạng Tree cho Sidebar.
+ * Tự động quản lý việc đóng/mở thư mục, hiển thị icon và action phụ (dropdown).
+ *
+ * @example
+ * ```tsx
+ * const data = [{ id: '1', label: 'Tài liệu', children: [{ id: '2', label: 'Báo cáo' }] }];
+ * 
+ * <SidebarTree data={data} activeId="2" onNodeSelect={(id) => console.log(id)} />
+ * ```
+ */
 export function SidebarTree({
   data,
   activeId,

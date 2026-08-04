@@ -6,6 +6,9 @@ import { RequiredAsterisk } from "./RequiredAsterisk";
 // --------------------------------------------------------
 // 1. INTERFACE
 // --------------------------------------------------------
+/**
+ * Cấu hình Props cho component TextareaField.
+ */
 export interface RHFTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   name: string; // BẮT BUỘC để map với React Hook Form
   label?: string | ReactNode;
@@ -84,6 +87,20 @@ const HelperMessage = styled.p<{ $isError?: boolean }>`
 // --------------------------------------------------------
 // 3. COMPONENT CHÍNH
 // --------------------------------------------------------
+/**
+ * Component TextareaField dùng cho Form (React Hook Form).
+ * Dùng để nhập các đoạn văn bản dài (mô tả, ghi chú). Tự động vô hiệu hóa tính năng resize để giữ layout chuẩn.
+ *
+ * @example
+ * ```tsx
+ * // Dùng bên trong <Form>
+ * <TextareaField 
+ *   name="description" 
+ *   label="Mô tả dự án" 
+ *   placeholder="Nhập thông tin chi tiết..." 
+ * />
+ * ```
+ */
 export function TextareaField({
   name,
   label,

@@ -5,6 +5,9 @@ import { colors } from "@/styles/colors";
 
 import { SidebarContext } from "./SidebarContext";
 
+/**
+ * Cấu hình Props cho SidebarRoot.
+ */
 export interface SidebarRootProps {
   children: ReactNode;
   collapsed: boolean;
@@ -17,6 +20,18 @@ interface SidebarStyleProps {
   $mobileOpen: boolean;
 }
 
+/**
+ * Component gốc bao bọc toàn bộ Sidebar.
+ * Quản lý trạng thái mở rộng/thu gọn (collapsed) và hiển thị trên mobile (mobileOpen) thông qua Context.
+ *
+ * @example
+ * ```tsx
+ * <SidebarRoot collapsed={false} mobileOpen={false} onMobileClose={() => {}}>
+ *   <SidebarHeader>Logo</SidebarHeader>
+ *   <SidebarContent>...</SidebarContent>
+ * </SidebarRoot>
+ * ```
+ */
 export const SidebarRoot = ({
   children,
   collapsed,

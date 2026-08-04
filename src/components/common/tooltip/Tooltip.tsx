@@ -25,6 +25,9 @@ import {
 import styled from "styled-components";
 
 // 1. Giao diện Props
+/**
+ * Cấu hình Props cho component Tooltip.
+ */
 export interface TooltipProps {
   content: ReactNode; // Nội dung Tooltip
   children: ReactElement; // Component con bị bọc (VD: IconButton)
@@ -50,6 +53,18 @@ const TooltipContent = styled.div`
 `;
 
 // 3. Component Chính
+/**
+ * Component Tooltip dùng để hiển thị hộp thoại thông tin nhỏ khi người dùng hover/focus vào một phần tử.
+ * Tích hợp Floating UI để tự động định vị và lật hướng thông minh khi không đủ khoảng trống.
+ * KHÔNG sinh thêm thẻ div bọc ngoài, giữ nguyên cấu trúc DOM của thành phần con.
+ *
+ * @example
+ * ```tsx
+ * <Tooltip content="Xóa dữ liệu này" placement="top">
+ *   <IconButton icon={<Trash />} aria-label="Delete" />
+ * </Tooltip>
+ * ```
+ */
 export function Tooltip({
   content,
   children,

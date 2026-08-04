@@ -4,6 +4,9 @@ import { StyledTabsList, StyledTabTrigger } from "./Tabs.styles";
 import { TabsContext, useTabsContext } from "./TabsContext";
 
 // 1. Root
+/**
+ * Cấu hình Props cho Tabs.Root.
+ */
 export interface TabsRootProps {
   value: string;
   onChange: (id: string) => void;
@@ -29,6 +32,9 @@ const Root: React.FC<TabsRootProps> = ({
 };
 
 // 2. List
+/**
+ * Cấu hình Props cho Tabs.List.
+ */
 export interface TabsListProps {
   children: React.ReactNode;
   className?: string;
@@ -46,6 +52,9 @@ const List: React.FC<TabsListProps> = ({ children, className }) => {
 };
 
 // 3. Trigger
+/**
+ * Cấu hình Props cho Tabs.Trigger.
+ */
 export interface TabTriggerProps {
   value: string;
   children: React.ReactNode;
@@ -79,6 +88,9 @@ const Trigger: React.FC<TabTriggerProps> = ({ value, children }) => {
 };
 
 // 4. Panel
+/**
+ * Cấu hình Props cho Tabs.Panel.
+ */
 export interface TabPanelProps {
   value: string;
   children: React.ReactNode;
@@ -107,6 +119,24 @@ const Panel: React.FC<TabPanelProps> = ({
   );
 };
 
+/**
+ * Component Tabs dùng để chuyển đổi nội dung giữa các tab khác nhau.
+ * Hoạt động dựa trên Context, giúp các thành phần (List, Trigger, Panel) liên kết với nhau thông qua `value`.
+ *
+ * @example
+ * ```tsx
+ * const [activeTab, setActiveTab] = useState('info');
+ * 
+ * <Tabs.Root value={activeTab} onChange={setActiveTab}>
+ *   <Tabs.List>
+ *     <Tabs.Trigger value="info">Thông tin</Tabs.Trigger>
+ *     <Tabs.Trigger value="settings">Cài đặt</Tabs.Trigger>
+ *   </Tabs.List>
+ *   <Tabs.Panel value="info">Nội dung thông tin</Tabs.Panel>
+ *   <Tabs.Panel value="settings">Nội dung cài đặt</Tabs.Panel>
+ * </Tabs.Root>
+ * ```
+ */
 export const Tabs = {
   Root,
   List,

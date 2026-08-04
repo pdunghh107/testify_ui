@@ -9,10 +9,22 @@ import { IconButton } from "../../../components/common/button/Button";
 import { Flex } from "../flex/Flex";
 import { UserProfileMenu } from "./UserProfileMenu";
 
+/**
+ * Cấu hình Props cho component Header.
+ */
 interface HeaderProps {
   onToggleSidebar: () => void;
 }
 
+/**
+ * Component Header hiển thị thanh điều hướng trên cùng của ứng dụng.
+ * Chứa nút chuyển đổi Sidebar (trên mobile), WorkspaceSelector và UserProfileMenu.
+ *
+ * @example
+ * ```tsx
+ * <Header onToggleSidebar={() => setSidebarOpen(!isOpen)} />
+ * ```
+ */
 export const Header = ({ onToggleSidebar }: HeaderProps) => {
   const { mutate: logoutApi } = useLogout();
 

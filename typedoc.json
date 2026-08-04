@@ -1,0 +1,17 @@
+{
+  "entryPoints": [
+    "src/components"
+  ],
+  "entryPointStrategy": "expand",
+  "out": "docs",
+  "name": "Testify UI Components",
+  "exclude": [
+    "**/*.styles.ts",
+    "**/*.test.tsx",
+    "**/index.ts"
+  ],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "hideGenerator": true
+}

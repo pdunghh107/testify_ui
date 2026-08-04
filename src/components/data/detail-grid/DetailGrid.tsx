@@ -4,6 +4,9 @@ import { Grid } from "@/components/layout/grid";
 import { Text } from "@/components/common/text";
 import { colors } from "@/styles/colors";
 
+/**
+ * Cấu hình cho mỗi item trong DetailGrid.
+ */
 export interface DetailGridConfig<T> {
   label: string;
   dataKey?: keyof T;
@@ -13,6 +16,9 @@ export interface DetailGridConfig<T> {
   render?: (value: any, record: T) => ReactNode;
 }
 
+/**
+ * Cấu hình Props cho component DetailGrid.
+ */
 export interface DetailGridProps<T> {
   title: string;
   icon?: ReactNode;
@@ -45,6 +51,20 @@ const InfoItem = styled.div<{ $colSpan?: number }>`
   ${({ $colSpan }) => ($colSpan ? `grid-column: span ${$colSpan};` : "")}
 `;
 
+/**
+ * Component DetailGrid dùng để hiển thị chi tiết dữ liệu (dạng text, badge, link...)
+ * trên một lưới linh hoạt (thường dùng trong Drawer hoặc Modal chi tiết).
+ *
+ * @example
+ * ```tsx
+ * const config = [
+ *   { label: 'Họ tên', dataKey: 'fullName' },
+ *   { label: 'Trạng thái', dataKey: 'status', render: (val) => <Badge>{val}</Badge> }
+ * ];
+ * 
+ * <DetailGrid title="Thông tin cơ bản" data={user} items={config} columns={2} />
+ * ```
+ */
 export function DetailGrid<T>({
   title,
   icon,

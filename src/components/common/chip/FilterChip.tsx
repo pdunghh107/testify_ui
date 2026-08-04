@@ -2,6 +2,9 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { colors } from "../../../styles/colors";
 
+/**
+ * Cấu hình Props cho component FilterChip.
+ */
 export interface FilterChipProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
   onRemove?: (e: React.MouseEvent) => void;
@@ -60,6 +63,17 @@ const RemoveIcon = styled.span`
   }
 `;
 
+/**
+ * Component FilterChip dùng để hiển thị các bộ lọc (filter) hoặc các thẻ có thể xóa.
+ * Hỗ trợ trạng thái active và nút (x) để xóa.
+ *
+ * @example
+ * ```tsx
+ * <FilterChip active={true} onRemove={() => removeFilter('status')}>
+ *   Trạng thái: Hoạt động
+ * </FilterChip>
+ * ```
+ */
 export const FilterChip = React.forwardRef<HTMLButtonElement, FilterChipProps>(
   ({ active = false, onRemove, children, ...props }, ref) => {
     return (

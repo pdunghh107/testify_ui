@@ -4,6 +4,9 @@ import styled from "styled-components";
 import { fonts } from "../../../styles/fonts";
 import { getAvatarColors, getInitials } from "../../../utils/avatar";
 
+/**
+ * Cấu hình Props cho component Avatar.
+ */
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
   src?: string | null;
@@ -61,6 +64,19 @@ const AvatarContainer = styled.div<{
   }
 `;
 
+/**
+ * Component Avatar dùng để hiển thị ảnh đại diện hoặc tên viết tắt của người dùng.
+ * Tự động tạo màu nền (dựa trên tên) nếu không có ảnh src.
+ *
+ * @example
+ * ```tsx
+ * // Hiển thị ảnh
+ * <Avatar name="Nguyễn Văn A" src="https://example.com/avatar.jpg" size={40} />
+ *
+ * // Hiển thị chữ cái đầu (N) với màu ngẫu nhiên
+ * <Avatar name="Nguyễn Văn A" size={40} />
+ * ```
+ */
 export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
   (
     { name, src, size = 36, color, bgColor, fontSize, children, onClick, ...rest },

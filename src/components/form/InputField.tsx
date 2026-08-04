@@ -7,6 +7,10 @@ import { RequiredAsterisk } from "./RequiredAsterisk";
 // --------------------------------------------------------
 // 1. INTERFACE
 // --------------------------------------------------------
+/**
+ * Cấu hình Props cho component InputField.
+ * Kế thừa các thuộc tính chuẩn của thẻ input HTML.
+ */
 export interface RHFInputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string; // BẮT BUỘC để map với React Hook Form
   label?: string | ReactNode;
@@ -124,6 +128,22 @@ const HelperMessage = styled.p<{ $isError?: boolean }>`
 // --------------------------------------------------------
 // 3. COMPONENT CHÍNH
 // --------------------------------------------------------
+/**
+ * Component InputField chuyên dụng cho Form (React Hook Form).
+ * Tự động đồng bộ với trạng thái lỗi, hiển thị label, helper text, icon và đánh dấu bắt buộc (*).
+ *
+ * @example
+ * ```tsx
+ * // Phải đặt bên trong <Form>
+ * <InputField 
+ *   name="username" 
+ *   label="Tên đăng nhập" 
+ *   placeholder="Nhập tên..." 
+ *   required 
+ *   leftIcon={<User size={16} />} 
+ * />
+ * ```
+ */
 export function InputField({
   name,
   label,

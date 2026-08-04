@@ -16,6 +16,9 @@ import * as React from "react";
 
 import { type SelectOptionType, SelectProvider } from "./SelectContext";
 
+/**
+ * Cấu hình Props cho SelectRoot.
+ */
 export interface SelectRootProps {
   children: React.ReactNode;
   value?: string | string[];
@@ -26,6 +29,20 @@ export interface SelectRootProps {
   disabled?: boolean;
 }
 
+/**
+ * Component Wrapper cho Select, chứa logic Floating UI và quản lý state mở/đóng.
+ * Không render ra DOM node thực tế mà dùng Context Provider.
+ *
+ * @example
+ * ```tsx
+ * <SelectRoot value={val} onChange={setVal} options={options}>
+ *   <SelectTrigger />
+ *   <SelectDropdown>
+ *     {options.map((opt, i) => <SelectOption key={i} value={opt.value} index={i}>{opt.label}</SelectOption>)}
+ *   </SelectDropdown>
+ * </SelectRoot>
+ * ```
+ */
 export function SelectRoot({
   children,
   value,

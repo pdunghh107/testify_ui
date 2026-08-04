@@ -8,14 +8,19 @@ import {
 } from "react-hook-form";
 import type { ZodType } from "zod";
 
-// Định nghĩa API gọi từ component cha
+/**
+ * Định nghĩa API được expose ra ngoài (thông qua ref) để component cha có thể gọi trực tiếp.
+ */
 export interface FormInstance {
   submit: () => void;
   resetForm: () => void;
   isDirty: boolean;
 }
 
-// Mở rộng từ thẻ form chuẩn, Omit onSubmit, children, và ref gốc để ghi đè
+/**
+ * Cấu hình Props cho component Form.
+ * Kế thừa các thuộc tính chuẩn của thẻ form HTML, loại bỏ `onSubmit`, `children`, `ref` để ghi đè type chặt chẽ hơn.
+ */
 interface FormProps<TFieldValues extends FieldValues> extends Omit<
   ComponentProps<"form">,
   "onSubmit" | "children" | "ref"
@@ -29,7 +34,21 @@ interface FormProps<TFieldValues extends FieldValues> extends Omit<
     | ((methods: UseFormReturn<TFieldValues>) => React.ReactNode);
 }
 
-// Trick ép kiểu để forwardRef không làm mất Generics Type của Typescript
+/**
+ * Component Form tổng bao bọc logic của react-hook-form và zod (validation).
+ * Tự động cung cấp FormProvider cho các trường (InputField, SelectField...) bên trong nó.
+ * Hỗ trợ truyền ref để gọi hàm từ bên ngoài (như submit, reset).
+ *
+ * @example
+ * ```tsx
+ * const schema = z.object({ email: z.string().email() });
+ * 
+ * <Form schema={schema} onSubmit={(data) => console.log(data)}>
+ *   <InputField name="email" label="Email" />
+ *   <Button type="submit">Lưu</Button>
+ * </Form>
+ * ```
+ */
 export const Form = forwardRef(
   <TFieldValues extends FieldValues>(
     {

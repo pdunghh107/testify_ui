@@ -99,6 +99,9 @@ const StyledChevron = styled(ChevronDown)<{ $isOpen: boolean }>`
   transition: transform 0.2s ease;
 `;
 
+/**
+ * Cấu hình Props cho SelectTrigger.
+ */
 export interface SelectTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   placeholder?: string;
   isError?: boolean;
@@ -106,6 +109,16 @@ export interface SelectTriggerProps extends React.ButtonHTMLAttributes<HTMLButto
   clearable?: boolean;
 }
 
+/**
+ * Component Nút bấm (Trigger) để mở danh sách tuỳ chọn (Dropdown).
+ * Tự động hiển thị giá trị đã chọn hoặc placeholder, hỗ trợ nút xóa (clear).
+ * Phải đặt bên trong `<SelectRoot>`.
+ *
+ * @example
+ * ```tsx
+ * <SelectTrigger placeholder="Chọn quốc gia..." clearable />
+ * ```
+ */
 export const SelectTrigger = React.forwardRef<
   HTMLButtonElement,
   SelectTriggerProps

@@ -3,6 +3,9 @@ import styled from "styled-components";
 
 import { colors } from "@/styles/colors";
 
+/**
+ * Cấu hình Props cho PageLayout.
+ */
 export interface PageLayoutProps {
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
@@ -59,6 +62,20 @@ const ContentBox = styled.div`
   flex-direction: column;
 `;
 
+/**
+ * Component Layout cơ bản nhất cho một trang (Page).
+ * Có phần header (title, subtitle, toolbar) và phần nội dung chính (content).
+ *
+ * @example
+ * ```tsx
+ * <PageLayout 
+ *   title="Cài đặt hệ thống"
+ *   subtitle="Quản lý cấu hình chung"
+ *   toolbar={<Button>Lưu</Button>}
+ *   content={<SettingsForm />}
+ * />
+ * ```
+ */
 export function PageLayout({
   title,
   subtitle,

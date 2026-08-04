@@ -10,6 +10,9 @@ import {
   AccordionContent,
 } from "./Accordion.styles";
 
+/**
+ * Cấu hình Props cho component Accordion.
+ */
 export interface AccordionProps {
   title: string;
   icon?: LucideIcon;
@@ -24,6 +27,23 @@ export interface AccordionProps {
   children: React.ReactNode;
 }
 
+/**
+ * Component Accordion dùng để thu gọn/mở rộng nội dung.
+ * Hỗ trợ cả hai chế độ: Uncontrolled (tự quản lý state nội bộ) và Controlled (quản lý từ bên ngoài qua `isOpen` và `onToggle`).
+ *
+ * @example
+ * ```tsx
+ * // Uncontrolled
+ * <Accordion title="Thông tin cơ bản" defaultOpen={true}>
+ *   <p>Nội dung chi tiết ở đây</p>
+ * </Accordion>
+ *
+ * // Controlled
+ * <Accordion title="Cài đặt" isOpen={isSettingsOpen} onToggle={setIsSettingsOpen}>
+ *   <SettingsForm />
+ * </Accordion>
+ * ```
+ */
 export const Accordion: React.FC<AccordionProps> = ({
   title,
   icon: Icon,

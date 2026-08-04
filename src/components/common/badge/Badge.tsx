@@ -38,6 +38,9 @@ export type PremiumVariant =
 
 export type BadgeVariant = BaseColorVariant | SemanticVariant | PremiumVariant;
 
+/**
+ * Cấu hình Props cho component Badge.
+ */
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
   // 3. Mở rộng props fill thay vì isOutline
@@ -196,6 +199,16 @@ const StyledBadge = styled.span<{
   }}
 `;
 
+/**
+ * Component Badge dùng để hiển thị nhãn trạng thái, tag hoặc số lượng.
+ * Hỗ trợ rất nhiều biến thể màu sắc (semantic, base color, premium) và kiểu fill (light, solid, outline).
+ *
+ * @example
+ * ```tsx
+ * <Badge variant="success" fill="light">Hoàn thành</Badge>
+ * <Badge variant="gold" fill="solid">VIP</Badge>
+ * ```
+ */
 export function Badge({
   variant = "gray",
   fill = "light",
@@ -209,6 +222,20 @@ export function Badge({
   );
 }
 
+/**
+ * Component ConfigBadge: Hiển thị Badge dựa trên một bộ cấu hình (configMap).
+ * Tiện lợi khi render các trạng thái có cấu hình màu sắc cố định.
+ *
+ * @example
+ * ```tsx
+ * const statusConfig = {
+ *   ACTIVE: { label: 'Hoạt động', variant: 'success' },
+ *   INACTIVE: { label: 'Tạm khóa', variant: 'gray' }
+ * };
+ * 
+ * <ConfigBadge value="ACTIVE" configMap={statusConfig} />
+ * ```
+ */
 export function ConfigBadge({
   value,
   label,
@@ -245,6 +272,15 @@ export function ConfigBadge({
   );
 }
 
+/**
+ * Component IconBadge: Hiển thị một icon được bọc trong một khối màu vuông bo góc.
+ * Thường dùng trong các danh sách hoặc tiêu đề tính năng.
+ *
+ * @example
+ * ```tsx
+ * <IconBadge icon={SettingsIcon} color="#fff" bg="#007bff" size={40} />
+ * ```
+ */
 export function IconBadge({
   icon: Icon,
   color,

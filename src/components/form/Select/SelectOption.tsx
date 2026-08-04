@@ -72,12 +72,25 @@ const OptionLabel = styled.span`
   white-space: nowrap;
 `;
 
+/**
+ * Cấu hình Props cho SelectOption.
+ */
 export interface SelectOptionProps extends React.LiHTMLAttributes<HTMLLIElement> {
   value: string;
   disabled?: boolean;
   index: number;
 }
 
+/**
+ * Component Tùy chọn (Option) đơn lẻ trong danh sách Dropdown.
+ * Hiển thị dấu check (cho single-select) hoặc ô checkbox (cho multi-select) nếu được chọn.
+ * Phải đặt bên trong `<SelectDropdown>`.
+ *
+ * @example
+ * ```tsx
+ * <SelectOption value="vn" index={0}>Việt Nam</SelectOption>
+ * ```
+ */
 export const SelectOption = React.forwardRef<HTMLLIElement, SelectOptionProps>(
   ({ value, children, disabled = false, index, ...props }, ref) => {
     const {

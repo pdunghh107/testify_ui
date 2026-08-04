@@ -9,6 +9,9 @@ import { fonts } from "@/styles/fonts";
 import { useSidebarCollapsibleContext } from "./SidebarCollapsible";
 import { useSidebarContext } from "./SidebarContext";
 
+/**
+ * Cấu hình Props cho SidebarItem.
+ */
 export interface SidebarItemProps {
   children: ReactNode;
   icon?: any;
@@ -20,6 +23,18 @@ export interface SidebarItemProps {
   level?: number;
 }
 
+/**
+ * Một mục điều hướng trong Sidebar.
+ * Nếu truyền `href`, nó sẽ đóng vai trò là một thẻ `<Link>`.
+ * Hỗ trợ phân cấp (level) để thụt lề đối với các menu con.
+ *
+ * @example
+ * ```tsx
+ * <SidebarItem icon={Home} href="/dashboard" isActive={true}>
+ *   Trang chủ
+ * </SidebarItem>
+ * ```
+ */
 export const SidebarItem = ({
   children,
   icon: Icon,

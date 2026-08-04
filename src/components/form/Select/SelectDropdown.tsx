@@ -112,6 +112,9 @@ const NoResult = styled.li`
   text-align: center;
 `;
 
+/**
+ * Cấu hình Props cho SelectDropdown.
+ */
 export interface SelectDropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   searchable?: boolean;
@@ -124,6 +127,19 @@ export interface SelectDropdownProps extends React.HTMLAttributes<HTMLDivElement
   transitionStyles?: React.CSSProperties;
 }
 
+/**
+ * Component Danh sách nổi (Dropdown) chứa các tuỳ chọn của Select.
+ * Có thể bật tính năng ô tìm kiếm (searchable). 
+ * Sử dụng FloatingPortal để không bị giới hạn bởi overflow của thẻ cha.
+ * Phải đặt bên trong `<SelectRoot>`.
+ *
+ * @example
+ * ```tsx
+ * <SelectDropdown searchable searchPlaceholder="Tìm...">
+ *   {options.map(...)}
+ * </SelectDropdown>
+ * ```
+ */
 export const SelectDropdown = React.forwardRef<
   HTMLDivElement,
   SelectDropdownProps

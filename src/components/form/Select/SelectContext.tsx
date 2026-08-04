@@ -1,12 +1,18 @@
 import type { useInteractions } from "@floating-ui/react";
 import * as React from "react";
 
+/**
+ * Kiểu dữ liệu của một Option trong Select.
+ */
 export interface SelectOptionType {
   value: string;
   label: string;
   disabled?: boolean;
 }
 
+/**
+ * Dữ liệu Context chia sẻ trạng thái giữa các component con của Select (Root, Trigger, Dropdown, Option).
+ */
 export interface SelectContextType {
   open: boolean;
   setOpen: (open: boolean) => void;

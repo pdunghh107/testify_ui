@@ -11,6 +11,9 @@ import {
 } from "../../form/Select";
 
 // --- Types ---
+/**
+ * Cấu hình Props cho component Pagination.
+ */
 export interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -187,6 +190,22 @@ function buildPages(current: number, total: number): (number | "…")[] {
   return pages;
 }
 
+/**
+ * Component Pagination hỗ trợ phân trang cho danh sách/bảng dữ liệu.
+ * Đi kèm với tính năng chọn số lượng hiển thị mỗi trang (Page Size).
+ *
+ * @example
+ * ```tsx
+ * <Pagination 
+ *   currentPage={1} 
+ *   totalPages={10} 
+ *   totalElements={100} 
+ *   pageSize={10} 
+ *   onPageChange={(page) => fetchPage(page)} 
+ *   onPageSizeChange={(size) => setPageSize(size)} 
+ * />
+ * ```
+ */
 export function Pagination({
   currentPage,
   totalPages,

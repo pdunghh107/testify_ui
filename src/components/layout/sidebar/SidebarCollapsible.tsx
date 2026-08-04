@@ -7,6 +7,9 @@ import { slideDownAnimation } from "@/components/animations/slideDown";
 import { Flex } from "../flex";
 import { useSidebarContext } from "./SidebarContext";
 
+/**
+ * Giá trị của Context dành cho SidebarCollapsible.
+ */
 export interface SidebarCollapsibleContextValue {
   isOpen: boolean;
   onToggle: (e: React.MouseEvent) => void;
@@ -27,6 +30,22 @@ export const useSidebarCollapsibleContext = () => {
   return context;
 };
 
+/**
+ * Component Wrapper cho một mục Sidebar có thể mở rộng/thu gọn (chứa menu con).
+ * Cung cấp Context cho các thành phần con như Trigger, Icon, Content.
+ *
+ * @example
+ * ```tsx
+ * <SidebarCollapsible isOpen={true} onToggle={() => {}} level={0}>
+ *   <SidebarItem prefix={<SidebarCollapsibleTrigger><SidebarCollapsibleIcon /></SidebarCollapsibleTrigger>}>
+ *     Menu có chứa menu con
+ *   </SidebarItem>
+ *   <SidebarCollapsibleContent>
+ *     <SidebarItem>Menu con</SidebarItem>
+ *   </SidebarCollapsibleContent>
+ * </SidebarCollapsible>
+ * ```
+ */
 export const SidebarCollapsible = ({
   children,
   isOpen,

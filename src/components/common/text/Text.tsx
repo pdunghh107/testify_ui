@@ -6,6 +6,9 @@ import { fonts } from "../../../styles/fonts";
 export type ColorKey = keyof typeof colors;
 export type VariantKey = keyof typeof fonts.variants;
 
+/**
+ * Cấu hình Props cho component Text.
+ */
 export interface TextProps extends HTMLAttributes<HTMLElement> {
   as?: ElementType;
   variant?: VariantKey;
@@ -31,6 +34,16 @@ const StyledText = styled.span<{
   }}
 `;
 
+/**
+ * Component Text dùng để hiển thị văn bản chuẩn hoá theo hệ thống Design Tokens (fonts, colors).
+ * Có thể thay đổi thẻ HTML (như h1, h2, p, span) thông qua thuộc tính `as`.
+ *
+ * @example
+ * ```tsx
+ * <Text as="h1" variant="h3Bold" color="primary">Tiêu đề chính</Text>
+ * <Text as="p" variant="baseRegular" color="textMuted">Đoạn văn mô tả...</Text>
+ * ```
+ */
 export const Text = React.forwardRef<HTMLElement, TextProps>(
   (
     {

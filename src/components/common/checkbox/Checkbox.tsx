@@ -8,6 +8,9 @@ import {
   LabelText,
 } from "./Checkbox.styles";
 
+/**
+ * Cấu hình Props cho component Checkbox.
+ */
 export interface CheckboxProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
   label?: string;
@@ -19,6 +22,21 @@ export interface CheckboxProps
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+/**
+ * Component Checkbox tùy chỉnh giao diện (Custom Checkbox).
+ * Hỗ trợ trạng thái Checked, Unchecked và Indeterminate (bán chọn).
+ *
+ * @example
+ * ```tsx
+ * const [isChecked, setIsChecked] = useState(false);
+ * 
+ * <Checkbox 
+ *   label="Đồng ý với điều khoản" 
+ *   checked={isChecked} 
+ *   onChange={(e) => setIsChecked(e.target.checked)} 
+ * />
+ * ```
+ */
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {

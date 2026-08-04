@@ -12,6 +12,15 @@ import {
 import { useLogout } from "@/features/auth/api/useLogout";
 import { useAuthStore } from "@/store/authStore";
 
+/**
+ * Component UserProfileMenu hiển thị Avatar người dùng hiện tại ở góc trên phải.
+ * Bấm vào sẽ xổ ra Menu (Dropdown) để truy cập Hồ sơ hoặc Đăng xuất.
+ *
+ * @example
+ * ```tsx
+ * <UserProfileMenu />
+ * ```
+ */
 export function UserProfileMenu() {
   const navigate = useNavigate();
   const { user } = useAuthStore();

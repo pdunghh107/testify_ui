@@ -100,6 +100,28 @@ export const EmptyData = ({ text }: { text?: string }) => (
   </EmptyStateContainer>
 );
 
+/**
+ * Component DataTable dùng để hiển thị dữ liệu dạng bảng có tích hợp sẵn:
+ * - Sorting,
+ * - Checkbox (chọn nhiều row),
+ * - Custom Rendering từng ô,
+ * - Empty State và Loading State.
+ *
+ * @example
+ * ```tsx
+ * const columns = [
+ *   { header: 'Tên', value: 'name', sortable: true },
+ *   { header: 'Hành động', type: 'action', actions: [...] }
+ * ];
+ * 
+ * <DataTable 
+ *   data={list} 
+ *   columns={columns} 
+ *   rowKey="id" 
+ *   selectable={true} 
+ * />
+ * ```
+ */
 export function DataTable<T>({
   columns,
   data = [],

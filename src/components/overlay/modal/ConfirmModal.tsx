@@ -3,6 +3,9 @@ import { AlertTriangle } from "lucide-react";
 import { Modal } from "./Modal";
 import { Text } from "@/components/common/text";
 
+/**
+ * Cấu hình Props cho ConfirmModal.
+ */
 export interface ConfirmModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -16,6 +19,22 @@ export interface ConfirmModalProps {
   icon?: React.ReactNode;
 }
 
+/**
+ * Component Modal chuyên dụng cho các hộp thoại xác nhận (Xóa, Cảnh báo).
+ * Là một wrapper của `Modal` component.
+ *
+ * @example
+ * ```tsx
+ * <ConfirmModal
+ *   isOpen={isOpen}
+ *   onClose={() => setIsOpen(false)}
+ *   onConfirm={() => deleteItem()}
+ *   title="Xác nhận xóa"
+ *   body="Bạn có chắc chắn muốn xóa bản ghi này không?"
+ *   type="danger"
+ * />
+ * ```
+ */
 export function ConfirmModal({
   isOpen,
   onClose,

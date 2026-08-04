@@ -1,6 +1,9 @@
 import React, { type ElementType, type ComponentPropsWithoutRef } from "react";
 import styled from "styled-components";
 
+/**
+ * Cấu hình Props cho component Flex.
+ */
 export type FlexProps<E extends ElementType = "div"> = {
   as?: E;
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
@@ -28,11 +31,25 @@ const StyledFlex = styled.div<{
   ${({ $flex }) => ($flex !== undefined ? `flex: ${$flex};` : "")}
 `;
 
-// ForwardRef với generic type cho phép polymorphic component
+/**
+ * Hỗ trợ TypeScript nhận diện Component đa hình (Polymorphic Component).
+ */
 type FlexComponent = <E extends ElementType = "div">(
   props: FlexProps<E> & { ref?: React.Ref<Element> }
 ) => React.ReactElement | null;
 
+/**
+ * Component Flex hỗ trợ tạo layout flexbox nhanh chóng thông qua các props.
+ * Hỗ trợ truyền thẻ HTML tuỳ chỉnh qua prop `as` (VD: `as="section"`).
+ *
+ * @example
+ * ```tsx
+ * <Flex direction="column" align="center" gap={16}>
+ *   <div>Mục 1</div>
+ *   <div>Mục 2</div>
+ * </Flex>
+ * ```
+ */
 export const Flex: FlexComponent = React.forwardRef(
   <E extends ElementType = "div">(
     {

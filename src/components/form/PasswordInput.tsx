@@ -4,6 +4,9 @@ import styled from "styled-components";
 
 import { InputField, type RHFInputProps } from "./InputField";
 
+/**
+ * Cấu hình Props cho PasswordInput (Loại bỏ các props không phù hợp như type, rightIcon).
+ */
 export type PasswordInputProps = Omit<
   RHFInputProps,
   "type" | "rightIcon" | "rightIconClickable"
@@ -30,6 +33,21 @@ const ToggleButton = styled.button`
   }
 `;
 
+/**
+ * Component PasswordInput kế thừa từ InputField nhưng được cấu hình sẵn cho việc nhập mật khẩu.
+ * Tự động gắn icon con mắt ở bên phải để chuyển đổi ẩn/hiện mật khẩu (toggle visibility).
+ *
+ * @example
+ * ```tsx
+ * // Phải đặt bên trong <Form>
+ * <PasswordInput 
+ *   name="password" 
+ *   label="Mật khẩu" 
+ *   placeholder="Nhập mật khẩu của bạn" 
+ *   required 
+ * />
+ * ```
+ */
 export function PasswordInput(props: PasswordInputProps) {
   const [show, setShow] = useState(false);
 

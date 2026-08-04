@@ -21,6 +21,9 @@ import {
 export type AlertVariant = AlertVariantType;
 export type AlertSize = AlertSizeType;
 
+/**
+ * Cấu hình Props cho component Alert.
+ */
 export interface AlertProps {
   children: React.ReactNode;
   variant?: AlertVariant;
@@ -40,6 +43,17 @@ const ICONS: Record<AlertVariant, LucideIcon> = {
   info: Info,
 };
 
+/**
+ * Component Alert dùng để hiển thị các thông báo trạng thái (thành công, lỗi, cảnh báo, thông tin).
+ * Hỗ trợ nhiều kích thước và tuỳ chỉnh icon.
+ *
+ * @example
+ * ```tsx
+ * <Alert variant="success" title="Thành công" onClose={() => console.log('closed')}>
+ *   Dữ liệu đã được lưu thành công.
+ * </Alert>
+ * ```
+ */
 export const Alert: React.FC<AlertProps> = ({
   children,
   variant = "info",

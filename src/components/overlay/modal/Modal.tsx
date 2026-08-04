@@ -21,6 +21,9 @@ import {
   ModalOverlay,
 } from "./Modal.styles";
 
+/**
+ * Cấu hình Props cho Modal.
+ */
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -38,8 +41,26 @@ interface ModalProps {
   maxWidth?: string;
   showX?: boolean;
   steps?: React.ReactNode;
+  asForm?: boolean;
 }
 
+/**
+ * Component Modal đa năng.
+ * Hỗ trợ bẫy focus (Focus Trap), vô hiệu hóa scroll nền (RemoveScroll),
+ * render thông qua React Portal và hỗ trợ đóng bằng phím ESC.
+ *
+ * @example
+ * ```tsx
+ * <Modal
+ *   isOpen={isOpen}
+ *   onClose={() => setIsOpen(false)}
+ *   title="Thêm mới"
+ *   onConfirm={() => handleSubmit()}
+ * >
+ *   <form>...</form>
+ * </Modal>
+ * ```
+ */
 export const Modal = ({
   isOpen,
   onClose,

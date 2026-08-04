@@ -3,6 +3,15 @@ import { useSidebarContext } from "./SidebarContext";
 import styled from "styled-components";
 import { colors } from "@/styles/colors";
 
+/**
+ * Nút bật/tắt (mở rộng/thu gọn) Sidebar. Nằm ngay cạnh viền phải của Sidebar.
+ * Tự động ẩn trên màn hình mobile.
+ *
+ * @example
+ * ```tsx
+ * <SidebarToggleButton onClick={() => setCollapsed(!collapsed)} />
+ * ```
+ */
 export const SidebarToggleButton = ({ onClick }: { onClick?: () => void }) => {
   const { collapsed } = useSidebarContext();
   return (

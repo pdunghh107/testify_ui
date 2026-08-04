@@ -4,7 +4,9 @@ import styled, { css } from "styled-components";
 
 import { spin } from "../animations/keyframes";
 
-// 1. Định nghĩa các Variants
+/**
+ * Các biến thể giao diện của Button.
+ */
 export type ButtonVariant =
   | "primary"
   | "secondary"
@@ -13,6 +15,9 @@ export type ButtonVariant =
   | "ghost"
   | "link";
 
+/**
+ * Cấu hình Props cho component Button.
+ */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   isLoading?: boolean;
@@ -126,7 +131,17 @@ const StyledButton = styled.button<{
   }
 `;
 
-// 4. Component Chính: Button
+/**
+ * Component Button linh hoạt cho mọi tương tác trong ứng dụng.
+ * Hỗ trợ trạng thái loading, disabled, và tích hợp icon 2 bên.
+ *
+ * @example
+ * ```tsx
+ * <Button variant="primary" leftIcon={<Plus size={16} />} onClick={handleCreate}>
+ *   Tạo mới
+ * </Button>
+ * ```
+ */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -158,7 +173,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-// 5. Component Chính: IconButton (A11y Trick)
+/**
+ * Cấu hình Props cho component IconButton.
+ */
 export interface IconButtonProps extends Omit<
   ButtonProps,
   "children" | "leftIcon" | "rightIcon"
@@ -167,6 +184,20 @@ export interface IconButtonProps extends Omit<
   "aria-label": string; // BẮT BUỘC để Screen Reader đọc
 }
 
+/**
+ * Component IconButton chuyên dụng để hiển thị một nút chỉ chứa Icon (không có text).
+ * Đảm bảo tỉ lệ khung hình vuông và tự động hỗ trợ Tooltip qua thẻ `title`.
+ *
+ * @example
+ * ```tsx
+ * <IconButton 
+ *   icon={<Trash size={16} />} 
+ *   variant="danger" 
+ *   aria-label="Xóa mục này" 
+ *   onClick={handleDelete} 
+ * />
+ * ```
+ */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (
     {
@@ -198,6 +229,11 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
 IconButton.displayName = "IconButton";
 
 // 6. Semantic Wrappers (Sugar syntax)
+
+/**
+ * Nút nhấn ưu tiên (Primary).
+ * @example <PrimaryButton>Lưu thông tin</PrimaryButton>
+ */
 export const PrimaryButton = forwardRef<
   HTMLButtonElement,
   Omit<ButtonProps, "variant">

@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate, Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Lock, Mail } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -41,8 +41,6 @@ export const LoginForm = () => {
     <S.LoginPageWrapper>
       <S.LoginLeftPanel>
         <S.LoginContentWrapper>
-
-
           <S.LoginTitle>Chào mừng đến với Testify</S.LoginTitle>
           <S.LoginSubtitle>
             Đăng nhập để sử dụng công cụ kiểm thử API tự động.
@@ -97,12 +95,38 @@ export const LoginForm = () => {
                 Đăng nhập
               </Button>
 
-              <div style={{ textAlign: "center", marginTop: "16px", fontSize: "14px", color: "#64748b" }}>
-                Chưa có tài khoản? <Link to="/register" style={{ color: "#3b82f6", fontWeight: 600, textDecoration: "none" }}>Đăng ký ngay</Link>
+              <div
+                style={{
+                  textAlign: "center",
+                  marginTop: "16px",
+                  fontSize: "14px",
+                  color: "#64748b",
+                }}
+              >
+                Chưa có tài khoản?{" "}
+                <Link
+                  to="/register"
+                  style={{
+                    color: "#3b82f6",
+                    fontWeight: 600,
+                    textDecoration: "none",
+                  }}
+                >
+                  Đăng ký ngay
+                </Link>
               </div>
 
               <div style={{ textAlign: "center", marginTop: "16px" }}>
-                <Link to="/forgot-password" style={{ color: "#94a3b8", fontSize: "14px", textDecoration: "none" }}>Forgot password?</Link>
+                <a
+                  href="/forgot-password"
+                  style={{
+                    color: "#94a3b8",
+                    fontSize: "14px",
+                    textDecoration: "none",
+                  }}
+                >
+                  Forgot password?
+                </a>
               </div>
 
               <S.LoginCopyright>

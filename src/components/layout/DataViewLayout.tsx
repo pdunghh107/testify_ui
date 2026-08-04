@@ -6,6 +6,9 @@ import { Button } from "@/components/common/button/Button";
 import { Modal } from "@/components/overlay/modal/Modal";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
+/**
+ * Cấu hình Props cho DataViewLayout.
+ */
 export interface DataViewLayoutProps {
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
@@ -34,6 +37,21 @@ const PaginationSection = styled.div`
   padding: 0 16px;
 `;
 
+/**
+ * Component Layout chuẩn hóa cho các màn hình hiển thị dữ liệu (thường là Data Table).
+ * Cung cấp sẵn các khu vực cho title, bộ lọc (filter), toolbar, bảng dữ liệu và phân trang.
+ * Tự động responsive: biến bộ lọc thành dạng Modal trên giao diện mobile.
+ *
+ * @example
+ * ```tsx
+ * <DataViewLayout 
+ *   title="Danh sách người dùng"
+ *   advancedFilter={<UserFilterForm />}
+ *   table={<DataTable columns={cols} data={data} />}
+ *   pagination={<Pagination totalPages={10} currentPage={1} />}
+ * />
+ * ```
+ */
 export function DataViewLayout({
   title,
   subtitle,

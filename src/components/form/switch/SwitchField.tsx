@@ -5,6 +5,9 @@ import { useFormContext, Controller } from "react-hook-form";
 // --------------------------------------------------------
 // 1. INTERFACE
 // --------------------------------------------------------
+/**
+ * Cấu hình Props cho component SwitchField.
+ */
 export interface SwitchFieldProps {
   name: string;
   label: React.ReactNode;
@@ -88,6 +91,21 @@ const DescriptionText = styled.span<{ $isError?: boolean }>`
 // --------------------------------------------------------
 // 3. COMPONENT
 // --------------------------------------------------------
+/**
+ * Component SwitchField dùng cho Form (React Hook Form).
+ * Hiển thị nút gạt bật/tắt (Toggle Switch) thay vì checkbox thông thường.
+ * Thích hợp cho các cấu hình hoặc tùy chọn on/off.
+ *
+ * @example
+ * ```tsx
+ * // Dùng bên trong <Form>
+ * <SwitchField 
+ *   name="notifications" 
+ *   label="Bật thông báo" 
+ *   description="Nhận email khi có cập nhật mới" 
+ * />
+ * ```
+ */
 export function SwitchField({
   name,
   label,

@@ -21,6 +21,9 @@ import {
   StyledDropdownSeparator,
 } from "./Dropdown.styles";
 
+/**
+ * Cấu hình Props cho component Dropdown.
+ */
 export interface DropdownProps {
   trigger: React.ReactNode;
   content: (onClose: () => void) => React.ReactNode;
@@ -37,6 +40,24 @@ export interface DropdownProps {
   disabled?: boolean;
 }
 
+/**
+ * Component Dropdown sử dụng Floating UI để hiển thị menu xổ xuống.
+ * Tự động tính toán vị trí hiển thị hợp lý tránh tràn màn hình (flip, shift).
+ *
+ * @example
+ * ```tsx
+ * <Dropdown
+ *   trigger={<Button>Tuỳ chọn</Button>}
+ *   content={(onClose) => (
+ *     <>
+ *       <DropdownItem onClick={() => { doSomething(); onClose(); }}>Sửa</DropdownItem>
+ *       <DropdownSeparator />
+ *       <DropdownItem variant="danger">Xoá</DropdownItem>
+ *     </>
+ *   )}
+ * />
+ * ```
+ */
 export function Dropdown({
   trigger,
   content,
@@ -46,7 +67,11 @@ export function Dropdown({
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { refs, floatingStyles, context } = useFloating({
+  const {
+    refs: { setReference, setFloating },
+    floatingStyles,
+    context,
+  } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
     placement,
@@ -77,7 +102,7 @@ export function Dropdown({
   return (
     <>
       <div
-        ref={refs.setReference}
+        ref={setReference}
         {...getReferenceProps()}
         style={{
           display: "inline-block",
@@ -92,7 +117,7 @@ export function Dropdown({
         <FloatingPortal>
           <FloatingFocusManager context={context} modal={false}>
             <div
-              ref={refs.setFloating}
+              ref={setFloating}
               style={{ ...floatingStyles, zIndex: 9999, outline: "none" }}
               {...getFloatingProps()}
             >
@@ -119,6 +144,9 @@ export interface DropdownItemProps {
   icon?: React.ElementType;
 }
 
+/**
+ * Mục con (Item) bên trong Dropdown.
+ */
 export function DropdownItem({
   children,
   onClick,

@@ -24,6 +24,15 @@ const IconWrapper = styled.div`
 }
 `;
 
+/**
+ * Component giao diện lỗi 404 (Không tìm thấy trang).
+ * Dùng làm fallback component trong Router khi người dùng truy cập một URL không tồn tại.
+ *
+ * @example
+ * ```tsx
+ * <Route path="*" element={<NotFound />} />
+ * ```
+ */
 export const NotFound = () => {
   return (
     <NotFoundContainer direction="column" align="center" justify="center">

@@ -8,6 +8,9 @@ const shimmer = keyframes`
   100% { background-position: -200% 0; }
 `;
 
+/**
+ * Cấu hình Props cho Skeleton.
+ */
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "text" | "rectangular" | "circular";
   width?: string | number;
@@ -68,6 +71,17 @@ const StyledSkeleton = styled.div<StyledSkeletonProps>`
   }}
 `;
 
+/**
+ * Component Skeleton dùng để hiển thị placeholder (hiệu ứng shimmer) trong khi đang tải dữ liệu.
+ * Có thể hiển thị dưới dạng văn bản (text), hình chữ nhật (rectangular) hoặc hình tròn (circular).
+ *
+ * @example
+ * ```tsx
+ * <Skeleton variant="circular" width={40} height={40} />
+ * <Skeleton variant="text" width="80%" />
+ * <Skeleton variant="rectangular" width="100%" height={200} />
+ * ```
+ */
 export function Skeleton({
   variant = "text",
   width,

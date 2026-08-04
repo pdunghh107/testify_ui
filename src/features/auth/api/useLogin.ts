@@ -1,4 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import type { AxiosError } from "axios";
+import { toast } from "react-hot-toast";
 
 import { axiosClient } from "../../../api/axiosClient";
 import { type ApiResponse } from "../../../api/types";
@@ -17,7 +20,8 @@ export interface AuthResponse {
   user: AuthUser;
 }
 
-export const useCrmLogin = () => {
+export const useLogin = () => {
+  const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
 
   return useMutation({
@@ -34,6 +38,11 @@ export const useCrmLogin = () => {
       if (accessToken) setAccessToken(accessToken);
 
       setAuth(user);
+      toast.success("Đăng nhập thành công!");
+      navigate({ to: "/" });
+    },
+    onError: (error: AxiosError<ApiResponse<void>>) => {
+      toast.error(error.response?.data?.message || "Đăng nhập thất bại");
     },
   });
 };

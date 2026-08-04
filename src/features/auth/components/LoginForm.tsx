@@ -1,20 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Lock, Mail } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 
-import { Button } from "../../../components/common/button/Button";
-import { InputField } from "../../../components/form/InputField";
-import { PasswordInput } from "../../../components/form/PasswordInput";
-import { useCrmLogin } from "../api/useLogin";
-import { LOGIN_FEATURES } from "../constants/loginFeatures";
-import { type LoginFormData, loginSchema } from "../validations/login-schema";
-import * as S from "./LoginForm.styles";
+import { Button } from "@/components/common/button/Button";
+import { InputField } from "@/components/form/InputField";
+import { PasswordInput } from "@/components/form/PasswordInput";
+import { useLogin } from "@/features/auth/api/useLogin";
+import { type LoginFormData, loginSchema } from "@/features/auth/validations/login-schema";
+import { AuthLayout } from "./layout/AuthLayout";
+import * as S from "./layout/AuthLayout.styles";
 
 export const LoginForm = () => {
-  const navigate = useNavigate();
-  const loginMutation = useCrmLogin();
+  const loginMutation = useLogin();
 
   const methods = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -24,118 +22,59 @@ export const LoginForm = () => {
   const { handleSubmit } = methods;
 
   const onSubmit = (data: LoginFormData) => {
-    loginMutation.mutate(data, {
-      onSuccess: () => {
-        toast.success("Đăng nhập thành công!");
-        navigate({ to: "/" });
-      },
-      onError: (err: any) => {
-        toast.error(err.response?.data?.message || "Đăng nhập thất bại");
-      },
-    });
+    loginMutation.mutate(data);
   };
 
   const isPending = loginMutation.isPending;
 
   return (
-    <S.LoginPageWrapper>
-      <S.LoginLeftPanel>
-        <S.LoginContentWrapper>
-          <S.LoginTitle>Chào mừng đến với Testify</S.LoginTitle>
-          <S.LoginSubtitle>
-            Đăng nhập để sử dụng công cụ kiểm thử API tự động.
-          </S.LoginSubtitle>
+    <AuthLayout
+      title="Chào mừng đến với Testify"
+      subtitle="Đăng nhập để sử dụng công cụ kiểm thử API tự động."
+    >
+      <FormProvider {...methods}>
+        <S.StyledForm onSubmit={handleSubmit(onSubmit)}>
+          <InputField
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="Nhập email của bạn"
+            disabled={isPending}
+            leftIcon={<Mail size={16} />}
+          />
 
-          <S.LoginFeaturesList>
-            {LOGIN_FEATURES.map((feature, idx) => {
-              const Icon = feature.icon;
-              return (
-                <S.LoginFeatureItem key={idx}>
-                  <S.LoginFeatureIconWrapper>
-                    <Icon size={20} />
-                  </S.LoginFeatureIconWrapper>
-                  <S.LoginFeatureText>{feature.text}</S.LoginFeatureText>
-                </S.LoginFeatureItem>
-              );
-            })}
-          </S.LoginFeaturesList>
-        </S.LoginContentWrapper>
-      </S.LoginLeftPanel>
+          <PasswordInput
+            name="password"
+            label="Mật khẩu"
+            placeholder="Nhập mật khẩu"
+            disabled={isPending}
+            leftIcon={<Lock size={16} />}
+          />
 
-      <S.LoginRightPanel>
-        <S.LoginFormBox>
-          <S.LoginRightLogo src="/testify_final_logo.png" alt="Testify" />
+          <Button
+            type="submit"
+            isLoading={isPending}
+            disabled={isPending}
+            variant="primary"
+            style={{ width: "100%" }}
+          >
+            Đăng nhập
+          </Button>
 
-          <FormProvider {...methods}>
-            <S.StyledForm onSubmit={handleSubmit(onSubmit)}>
-              <InputField
-                name="email"
-                label="Email"
-                type="email"
-                placeholder="Nhập email của bạn"
-                disabled={isPending}
-                leftIcon={<Mail size={16} />}
-              />
+          <S.LinkText>
+            Chưa có tài khoản? <Link to="/register">Đăng ký ngay</Link>
+          </S.LinkText>
 
-              <PasswordInput
-                name="password"
-                label="Mật khẩu"
-                placeholder="Nhập mật khẩu"
-                disabled={isPending}
-                leftIcon={<Lock size={16} />}
-              />
-
-              <Button
-                type="submit"
-                isLoading={isPending}
-                disabled={isPending}
-                variant="primary"
-                style={{ width: "100%" }}
-              >
-                Đăng nhập
-              </Button>
-
-              <div
-                style={{
-                  textAlign: "center",
-                  marginTop: "16px",
-                  fontSize: "14px",
-                  color: "#64748b",
-                }}
-              >
-                Chưa có tài khoản?{" "}
-                <Link
-                  to="/register"
-                  style={{
-                    color: "#3b82f6",
-                    fontWeight: 600,
-                    textDecoration: "none",
-                  }}
-                >
-                  Đăng ký ngay
-                </Link>
-              </div>
-
-              <div style={{ textAlign: "center", marginTop: "16px" }}>
-                <a
-                  href="/forgot-password"
-                  style={{
-                    color: "#94a3b8",
-                    fontSize: "14px",
-                    textDecoration: "none",
-                  }}
-                >
-                  Forgot password?
-                </a>
-              </div>
-
-              <S.LoginCopyright>
-                © 2026 Testify. All rights reserved.
-              </S.LoginCopyright>
-            </S.StyledForm>
-          </FormProvider>
-        </S.LoginFormBox>
-      </S.LoginRightPanel>
-    </S.LoginPageWrapper>
+          <S.LinkText style={{ marginTop: "0px" }}>
+            <a
+              href="/forgot-password"
+              style={{ color: "#94a3b8", fontWeight: "normal" }}
+            >
+              Quên mật khẩu?
+            </a>
+          </S.LinkText>
+        </S.StyledForm>
+      </FormProvider>
+    </AuthLayout>
   );
 };

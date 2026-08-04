@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { PASSWORD_ERROR_MESSAGE, PASSWORD_REGEX } from "../constants/validation";
 
 export const registerSchema = z.object({
   fullName: z
@@ -16,11 +17,8 @@ export const registerSchema = z.object({
     .email({ message: "Email không đúng định dạng" }),
   password: z
     .string()
-    .min(8, { message: "Mật khẩu phải có ít nhất 8 ký tự" })
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
-      message:
-        "Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt",
-    }),
+    .min(1, { message: "Mật khẩu là bắt buộc" })
+    .regex(PASSWORD_REGEX, { message: PASSWORD_ERROR_MESSAGE }),
   confirmPassword: z.string().min(1, { message: "Xác nhận mật khẩu là bắt buộc" }),
 }).refine((data) => data.password === data.confirmPassword, {
   path: ["confirmPassword"],

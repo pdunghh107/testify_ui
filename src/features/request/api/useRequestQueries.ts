@@ -35,7 +35,9 @@ export const useRequests = (workspaceId: string | null) => {
     queryKey: ["requests", workspaceId],
     queryFn: async (): Promise<RequestResponse[]> => {
       if (!workspaceId) return [];
-      const { data } = await axiosClient.get(`/requests/workspace/${workspaceId}`);
+      const { data } = await axiosClient.get(
+        `/requests/workspaces/${workspaceId}`,
+      );
       return data?.data ?? data;
     },
     enabled: !!workspaceId,

@@ -16,7 +16,7 @@ import { CreateFolderModal } from "@/features/workspace/components/modal/CreateF
 import { CreateWorkspaceModal } from "@/features/workspace/components/modal/CreateWorkspaceModal";
 import { CreateRequestModal } from "@/features/workspace/components/modal/CreateRequestModal";
 import { useConfirm } from "@/hooks/useConfirm";
-import { useProjectStore } from "@/store/workspaceStore";
+import { useWorkspaceStore } from "@/store/workspaceStore";
 
 import {
   getFolderActions,
@@ -26,7 +26,7 @@ import {
 
 export const useWorkspaceTree = () => {
   // 1. Modals State
-  const [isProjectModalOpen, setProjectModalOpen] = useState(false);
+  const [isWorkspaceModalOpen, setWorkspaceModalOpen] = useState(false);
 
   const [folderModalState, setFolderModalState] = useState<{
     isOpen: boolean;
@@ -43,7 +43,7 @@ export const useWorkspaceTree = () => {
   const confirm = useConfirm();
 
   // 2. Domain Data
-  const { activeWorkspaceId } = useProjectStore();
+  const { activeWorkspaceId } = useWorkspaceStore();
   const { data: activeWorkspaceFolders = [] } = useFolders(
     activeWorkspaceId || null,
   );
@@ -52,7 +52,7 @@ export const useWorkspaceTree = () => {
   );
 
   // Mutations
-  const deleteProject = useDeleteWorkspace();
+  const deleteWorkspace = useDeleteWorkspace();
   const deleteFolder = useDeleteFolder(activeWorkspaceId || "");
   const deleteRequest = useDeleteRequest(activeWorkspaceId || "");
 
@@ -62,13 +62,13 @@ export const useWorkspaceTree = () => {
       onNewFolder: (workspaceId, parentFolderId) => {
         setFolderModalState({ isOpen: true, workspaceId, parentFolderId });
       },
-      onDeleteProject: (workspaceId, projectName) => {
+      onDeleteWorkspace: (workspaceId, workspaceName) => {
         confirm({
           title: "Xóa Workspace",
-          body: `Bạn có chắc chắn muốn xóa Workspace "${projectName}" không? Toàn bộ dữ liệu bên trong sẽ bị mất vĩnh viễn.`,
+          body: `Bạn có chắc chắn muốn xóa Workspace "${workspaceName}" không? Toàn bộ dữ liệu bên trong sẽ bị mất vĩnh viễn.`,
           type: "danger",
           action: async () => {
-            await deleteProject.mutateAsync(workspaceId);
+            await deleteWorkspace.mutateAsync(workspaceId);
             toast.success("Xóa Workspace thành công");
           },
         });
@@ -98,7 +98,7 @@ export const useWorkspaceTree = () => {
         });
       },
     }),
-    [confirm, deleteProject, deleteFolder, deleteRequest],
+    [confirm, deleteWorkspace, deleteFolder, deleteRequest],
   );
 
   // 4. Mapper
@@ -160,8 +160,8 @@ export const useWorkspaceTree = () => {
   const WorkspaceModals = (
     <>
       <CreateWorkspaceModal
-        isOpen={isProjectModalOpen}
-        onClose={() => setProjectModalOpen(false)}
+        isOpen={isWorkspaceModalOpen}
+        onClose={() => setWorkspaceModalOpen(false)}
       />
 
       {folderModalState.isOpen && folderModalState.workspaceId && (
@@ -187,7 +187,7 @@ export const useWorkspaceTree = () => {
   return {
     nodes,
     WorkspaceModals,
-    onNewProject: () => setProjectModalOpen(true),
+    onNewWorkspace: () => setWorkspaceModalOpen(true),
     onNewFolder: () => {
       if (activeWorkspaceId) {
         setFolderModalState({ isOpen: true, workspaceId: activeWorkspaceId });

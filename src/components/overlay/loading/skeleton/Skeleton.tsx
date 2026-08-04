@@ -1,5 +1,6 @@
-import styled, { keyframes, css } from "styled-components";
 import React from "react";
+import styled, { css, keyframes } from "styled-components";
+
 import { colors } from "../../../../styles/colors";
 
 const shimmer = keyframes`
@@ -20,15 +21,6 @@ interface StyledSkeletonProps {
 }
 
 const StyledSkeleton = styled.div<StyledSkeletonProps>`
-  background: linear-gradient(
-    90deg,
-    ${colors.borderLight} 25%,
-    ${colors.backgroundHover} 50%,
-    ${colors.borderLight} 75%
-  );
-  background-size: 200% 100%;
-  animation: ${shimmer} 1.5s infinite linear;
-
   width: ${({ $width, $variant }) =>
     $width
       ? typeof $width === "number"
@@ -37,7 +29,6 @@ const StyledSkeleton = styled.div<StyledSkeletonProps>`
       : $variant === "text"
         ? "100%"
         : "auto"};
-
   height: ${({ $height, $variant }) =>
     $height
       ? typeof $height === "number"
@@ -46,6 +37,16 @@ const StyledSkeleton = styled.div<StyledSkeletonProps>`
       : $variant === "text"
         ? "1rem"
         : "auto"};
+
+  background: linear-gradient(
+    90deg,
+    ${colors.borderLight} 25%,
+    ${colors.backgroundHover} 50%,
+    ${colors.borderLight} 75%
+  );
+  background-size: 200% 100%;
+
+  animation: ${shimmer} 1.5s infinite linear;
 
   ${({ $variant }) => {
     switch ($variant) {
@@ -60,8 +61,8 @@ const StyledSkeleton = styled.div<StyledSkeletonProps>`
       case "text":
       default:
         return css`
-          border-radius: 4px;
           margin-bottom: 0.5rem;
+          border-radius: 4px;
         `;
     }
   }}

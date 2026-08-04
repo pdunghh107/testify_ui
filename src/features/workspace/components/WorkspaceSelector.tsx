@@ -8,7 +8,7 @@ import {
   SelectTrigger,
 } from "@/components/form/Select";
 import { useWorkspaces } from "@/features/workspace/api/useWorkspaceQueries";
-import { useProjectStore } from "@/store/workspaceStore";
+import { useWorkspaceStore } from "@/store/workspaceStore";
 
 const SelectorContainer = styled.div`
   width: 250px;
@@ -16,7 +16,7 @@ const SelectorContainer = styled.div`
 
 export const WorkspaceSelector = () => {
   const { data: workspaces = [] } = useWorkspaces();
-  const { activeWorkspaceId, setActiveWorkspace } = useProjectStore();
+  const { activeWorkspaceId, setActiveWorkspace } = useWorkspaceStore();
   const navigate = useNavigate();
 
   const options = workspaces.map((p) => ({ label: p.name, value: p.id }));

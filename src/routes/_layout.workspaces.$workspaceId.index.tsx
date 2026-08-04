@@ -4,10 +4,10 @@ import { fonts } from "@/styles/fonts";
 import { colors } from "@/styles/colors";
 
 export const Route = createFileRoute("/_layout/workspaces/$workspaceId/")({
-  component: ProjectDashboard,
+  component: WorkspaceDashboard,
 });
 
-function ProjectDashboard() {
+function WorkspaceDashboard() {
   const { workspaceId } = Route.useParams();
 
   return (

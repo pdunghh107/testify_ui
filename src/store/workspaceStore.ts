@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface ProjectState {
+interface WorkspaceState {
   activeWorkspaceId: string | null;
   activeFolderId: string | null;
   
@@ -8,7 +8,7 @@ interface ProjectState {
   setActiveFolder: (folderId: string | null) => void;
 }
 
-export const useProjectStore = create<ProjectState>((set) => ({
+export const useWorkspaceStore = create<WorkspaceState>((set) => ({
   activeWorkspaceId: null,
   activeFolderId: null,
 

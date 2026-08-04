@@ -1,6 +1,7 @@
-import { Menu } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import styled from "styled-components";
 
+import { useLogout } from "@/features/auth/api/useLogout";
 import { WorkspaceSelector } from "@/features/workspace/components/WorkspaceSelector";
 import { colors } from "@/styles/colors";
 
@@ -13,6 +14,8 @@ interface HeaderProps {
 }
 
 export const Header = ({ onToggleSidebar }: HeaderProps) => {
+  const { mutate: logoutApi } = useLogout();
+
   return (
     <HeaderWrapper>
       <Flex align="center">
@@ -27,10 +30,19 @@ export const Header = ({ onToggleSidebar }: HeaderProps) => {
         <WorkspaceSelector />
       </Flex>
 
-      <Flex style={{ flex: 1 }} />
+      <Flex flex={1} />
 
       <Flex align="center" gap={8}>
         <UserProfileMenu />
+        <Seperator />
+        <IconButton
+          icon={<LogOut size={16} />}
+          variant="ghost"
+          onClick={() => logoutApi()}
+          title="Đăng xuất"
+          aria-label="Đăng xuất"
+          style={{ color: colors.danger }}
+        />
       </Flex>
     </HeaderWrapper>
   );
@@ -53,4 +65,10 @@ const MobileMenuButton = styled.div`
   @media (width >= 1025px) {
     display: none;
   }
+`;
+
+const Seperator = styled.div`
+  width: 1px;
+  height: 24px;
+  background: ${colors.borderLight};
 `;

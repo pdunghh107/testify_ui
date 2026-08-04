@@ -335,13 +335,13 @@ export function RuleConfigPage() {
         title={methods.getValues("id") ? "Sửa Rule Config" : "Thêm Rule Config"}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        asForm={true}
-        onSubmit={methods.handleSubmit(handleSave)}
+        onConfirm={methods.handleSubmit(handleSave)}
         isLoading={isSubmitting}
         maxWidth="800px"
       >
         <FormProvider {...methods}>
-          <Flex direction="column" gap={16}>
+          <form onSubmit={methods.handleSubmit(handleSave)}>
+            <Flex direction="column" gap={16}>
             <InputField
               name="configCode"
               label="Mã Config (Code)"
@@ -382,6 +382,7 @@ export function RuleConfigPage() {
               </Tabs.Panel>
             </Tabs.Root>
           </Flex>
+          </form>
         </FormProvider>
       </Modal>
     </>

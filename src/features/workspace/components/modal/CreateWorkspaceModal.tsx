@@ -26,10 +26,10 @@ export const CreateWorkspaceModal = ({
   onClose: () => void;
 }) => {
   const formRef = useRef<FormInstance>(null);
-  const createProject = useCreateWorkspace();
+  const createWorkspace = useCreateWorkspace();
 
   const handleSubmit = (data: FormValues) => {
-    createProject.mutate(data, {
+    createWorkspace.mutate(data, {
       onSuccess: () => {
         formRef.current?.resetForm();
         onClose();
@@ -42,8 +42,8 @@ export const CreateWorkspaceModal = ({
       isOpen={isOpen}
       onClose={onClose}
       title="Create New Workspace"
-      isLoading={createProject.isPending}
-      onSubmit={() => formRef.current?.submit()}
+      isLoading={createWorkspace.isPending}
+      onConfirm={() => formRef.current?.submit()}
       asForm={false}
     >
       <Form schema={schema} onSubmit={handleSubmit} ref={formRef}>

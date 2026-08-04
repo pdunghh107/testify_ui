@@ -30,7 +30,7 @@ export function DetailConfigModal({ isOpen, onClose, data }: Props) {
       onClose={onClose}
       title="Chi tiết cấu hình"
       submitText="Đóng"
-      onSubmit={onClose} // Just close on submit
+      onConfirm={onClose} // Just close on submit
       showX={true}
     >
       <FormProvider {...methods}>

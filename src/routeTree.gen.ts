@@ -14,6 +14,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout.index'
 import { Route as LayoutRuleConfigsRouteImport } from './routes/_layout.rule-configs'
+import { Route as LayoutProfileRouteImport } from './routes/_layout.profile'
 import { Route as LayoutConfigRouteImport } from './routes/_layout.config'
 import { Route as LayoutRequestsRequestIdRouteImport } from './routes/_layout.requests.$requestId'
 import { Route as LayoutFoldersFolderIdRouteImport } from './routes/_layout.folders.$folderId'
@@ -43,6 +44,11 @@ const LayoutRuleConfigsRoute = LayoutRuleConfigsRouteImport.update({
   path: '/rule-configs',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutProfileRoute = LayoutProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutConfigRoute = LayoutConfigRouteImport.update({
   id: '/config',
   path: '/config',
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/config': typeof LayoutConfigRoute
+  '/profile': typeof LayoutProfileRoute
   '/rule-configs': typeof LayoutRuleConfigsRoute
   '/folders/$folderId': typeof LayoutFoldersFolderIdRoute
   '/requests/$requestId': typeof LayoutRequestsRequestIdRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/config': typeof LayoutConfigRoute
+  '/profile': typeof LayoutProfileRoute
   '/rule-configs': typeof LayoutRuleConfigsRoute
   '/': typeof LayoutIndexRoute
   '/folders/$folderId': typeof LayoutFoldersFolderIdRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/_layout/config': typeof LayoutConfigRoute
+  '/_layout/profile': typeof LayoutProfileRoute
   '/_layout/rule-configs': typeof LayoutRuleConfigsRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/folders/$folderId': typeof LayoutFoldersFolderIdRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/config'
+    | '/profile'
     | '/rule-configs'
     | '/folders/$folderId'
     | '/requests/$requestId'
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/config'
+    | '/profile'
     | '/rule-configs'
     | '/'
     | '/folders/$folderId'
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/_layout/config'
+    | '/_layout/profile'
     | '/_layout/rule-configs'
     | '/_layout/'
     | '/_layout/folders/$folderId'
@@ -174,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutRuleConfigsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/profile': {
+      id: '/_layout/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof LayoutProfileRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/config': {
       id: '/_layout/config'
       path: '/config'
@@ -207,6 +226,7 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutConfigRoute: typeof LayoutConfigRoute
+  LayoutProfileRoute: typeof LayoutProfileRoute
   LayoutRuleConfigsRoute: typeof LayoutRuleConfigsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutFoldersFolderIdRoute: typeof LayoutFoldersFolderIdRoute
@@ -216,6 +236,7 @@ interface LayoutRouteChildren {
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutConfigRoute: LayoutConfigRoute,
+  LayoutProfileRoute: LayoutProfileRoute,
   LayoutRuleConfigsRoute: LayoutRuleConfigsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutFoldersFolderIdRoute: LayoutFoldersFolderIdRoute,

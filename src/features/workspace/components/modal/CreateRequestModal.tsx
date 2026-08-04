@@ -54,7 +54,7 @@ export function CreateRequestModal({
       onClose={onClose}
       title="Tạo mới Request"
       isLoading={createRequest.isPending}
-      onSubmit={() => formRef.current?.submit()}
+      onConfirm={() => formRef.current?.submit()}
       asForm={false}
     >
       <Form

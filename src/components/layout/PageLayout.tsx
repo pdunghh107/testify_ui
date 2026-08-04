@@ -11,14 +11,16 @@ export interface PageLayoutProps {
 }
 
 const LayoutContainer = styled.div`
+  overflow: auto; /* Cho phép scroll toàn trang nếu cần */
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background-color: ${colors.backgroundApp};
+
+  box-sizing: border-box;
   height: 100%;
   padding: 24px;
-  box-sizing: border-box;
-  overflow: auto; /* Cho phép scroll toàn trang nếu cần */
+
+  background-color: ${colors.backgroundApp};
 `;
 
 const HeaderSection = styled.div`
@@ -27,20 +29,22 @@ const HeaderSection = styled.div`
   justify-content: space-between;
 `;
 
-export const Title = styled.h1`
+const Title = styled.h1`
+  margin: 0;
+
   font-size: 24px;
   font-weight: 800;
-  margin: 0;
+
   background: ${colors.brandGradient};
-  -webkit-background-clip: text;
   background-clip: text;
+
   -webkit-text-fill-color: transparent;
 `;
 
 const Subtitle = styled.div`
+  margin-top: 4px;
   font-size: 14px;
   color: ${colors.textMuted};
-  margin-top: 4px;
 `;
 
 const ToolbarSection = styled.div`
@@ -50,8 +54,8 @@ const ToolbarSection = styled.div`
 `;
 
 const ContentBox = styled.div`
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
 `;
 

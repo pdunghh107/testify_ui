@@ -57,9 +57,8 @@ export function CreateConfigModal({ isOpen, onClose, onSuccess }: Props) {
       onClose={onClose}
       title="Thêm cấu hình mới"
       submitText={loading ? "Đang tạo..." : "Tạo mới"}
-      onSubmit={methods.handleSubmit(onSubmit)}
-      asForm={true}
-    >
+      onConfirm={methods.handleSubmit(onSubmit)}
+      >
       <FormProvider {...methods}>
         <ConfigForm />
       </FormProvider>

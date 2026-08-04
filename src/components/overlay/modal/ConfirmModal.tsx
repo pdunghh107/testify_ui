@@ -38,7 +38,7 @@ export function ConfirmModal({
       submitText={confirmText}
       cancelText={cancelText}
       isLoading={isLoading}
-      onSubmit={(e) => {
+      onConfirm={(e) => {
         if (e) e.preventDefault();
         onConfirm();
       }}

@@ -1,7 +1,8 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
-import styled, { css } from "styled-components";
-import { spin } from "../animations/keyframes";
 import { Loader2 } from "lucide-react";
+import { type ButtonHTMLAttributes, forwardRef, type ReactNode } from "react";
+import styled, { css } from "styled-components";
+
+import { spin } from "../animations/keyframes";
 
 // 1. Định nghĩa các Variants
 export type ButtonVariant =
@@ -26,51 +27,57 @@ const SpinningIcon = styled(Loader2)`
 // 2. Map CSS cho từng Variant (Map chính xác với theme colors CRM)
 const variantStyles = {
   primary: css`
-    background-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.textInverse};
     border: 1px solid transparent;
+    color: ${({ theme }) => theme.colors.textInverse};
+    background-color: ${({ theme }) => theme.colors.primary};
+
     &:hover:not(:disabled) {
       background-color: ${({ theme }) => theme.colors.primaryHover};
     }
   `,
   secondary: css`
-    background-color: ${({ theme }) => theme.colors.secondary};
-    color: ${({ theme }) => theme.colors.textInverse};
     border: 1px solid transparent;
+    color: ${({ theme }) => theme.colors.textInverse};
+    background-color: ${({ theme }) => theme.colors.secondary};
+
     &:hover:not(:disabled) {
       background-color: ${({ theme }) => theme.colors.secondaryHover};
     }
   `,
   danger: css`
-    background-color: ${({ theme }) => theme.colors.danger};
-    color: ${({ theme }) => theme.colors.textInverse};
     border: 1px solid transparent;
+    color: ${({ theme }) => theme.colors.textInverse};
+    background-color: ${({ theme }) => theme.colors.danger};
+
     &:hover:not(:disabled) {
       /* Dùng redDark từ dải 12 màu của bạn làm hover cho danger */
       background-color: ${({ theme }) => theme.colors.redDark};
     }
   `,
   outline: css`
-    background-color: transparent;
-    color: ${({ theme }) => theme.colors.primary};
     border: 1px solid ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.primary};
+    background-color: transparent;
+
     &:hover:not(:disabled) {
       background-color: ${({ theme }) => theme.colors.primaryLight};
     }
   `,
   ghost: css`
-    background-color: transparent;
-    color: ${({ theme }) => theme.colors.textMain};
     border: 1px solid transparent;
+    color: ${({ theme }) => theme.colors.textMain};
+    background-color: transparent;
+
     &:hover:not(:disabled) {
       background-color: ${({ theme }) => theme.colors.backgroundHover};
     }
   `,
   link: css`
-    background-color: transparent;
-    color: ${({ theme }) => theme.colors.primary};
-    border: 1px solid transparent;
     padding: 0;
+    border: 1px solid transparent;
+    color: ${({ theme }) => theme.colors.primary};
+    background-color: transparent;
+
     &:hover:not(:disabled) {
       text-decoration: underline;
     }
@@ -83,20 +90,23 @@ const StyledButton = styled.button<{
   $isLoading?: boolean;
   $isIconOnly?: boolean;
 }>`
+  cursor: pointer;
+
   display: inline-flex;
+  gap: 8px;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+
   font-family: ${({ theme }) => theme.fonts.family.base};
-  font-weight: ${({ theme }) => theme.fonts.weight.medium};
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
   font-size: ${({ theme }) => theme.fonts.size.base};
+  font-weight: ${({ theme }) => theme.fonts.weight.medium};
+
+  transition: all 0.2s ease-in-out;
 
   /* Nếu là IconButton: hình vuông/tròn (tùy chỉnh), ngược lại padding hình chữ nhật */
-  border-radius: ${({ $isIconOnly }) => ($isIconOnly ? "8px" : "6px")};
-  padding: ${({ $isIconOnly }) => ($isIconOnly ? "8px" : "8px 16px")};
   aspect-ratio: ${({ $isIconOnly }) => ($isIconOnly ? "1 / 1" : "auto")};
+  padding: ${({ $isIconOnly }) => ($isIconOnly ? "8px" : "8px 16px")};
+  border-radius: ${({ $isIconOnly }) => ($isIconOnly ? "8px" : "6px")};
 
   /* Xóa gạch chân khi hover của base html (trừ link) */
   text-decoration: none;
@@ -106,8 +116,8 @@ const StyledButton = styled.button<{
 
   /* Disabled & Loading State */
   &:disabled {
-    opacity: 0.6;
     cursor: not-allowed;
+    opacity: 0.6;
     ${({ $isLoading }) =>
       !$isLoading &&
       css`

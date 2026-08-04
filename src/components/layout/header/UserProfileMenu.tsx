@@ -1,22 +1,19 @@
-import { useState, useRef } from "react";
-import { LogOut } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import { LogOut, User } from "lucide-react";
 
-import { Flex } from "../flex/Flex";
-import { colors } from "../../../styles/colors";
-import { useClickOutside } from "../../../hooks/useClickOutside";
-
-import { IconButton } from "../../common/button";
-import { Avatar } from "../../common/avatar";
-
-import { useAuthStore } from "../../../store/authStore";
-import { useLogout } from "../../../features/auth/api/useLogout";
+import { Avatar } from "@/components/common/avatar";
+import { Flex } from "@/components/layout/flex/Flex";
+import {
+  Dropdown,
+  DropdownHeader,
+  DropdownItem,
+  DropdownSeparator,
+} from "@/components/overlay/dropdown";
+import { useLogout } from "@/features/auth/api/useLogout";
+import { useAuthStore } from "@/store/authStore";
 
 export function UserProfileMenu() {
-  const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useClickOutside(menuRef, () => setIsOpen(false));
-
+  const navigate = useNavigate();
   const { user } = useAuthStore();
   const { mutate: logoutApi } = useLogout();
 
@@ -27,18 +24,47 @@ export function UserProfileMenu() {
   const displayName = user?.fullName || "Người dùng";
 
   return (
-    <Flex align="center" gap={12} ref={menuRef}>
-      <Avatar name={displayName} size={32} onClick={() => setIsOpen(!isOpen)} />
-
-      <div style={{ width: 1, height: 24, background: colors.borderLight }} />
-
-      <IconButton
-        icon={<LogOut size={16} />}
-        variant="ghost"
-        onClick={handleLogout}
-        title="Đăng xuất"
-        aria-label="Đăng xuất"
-        style={{ color: colors.danger }}
+    <Flex align="center">
+      <Dropdown
+        placement="bottom-end"
+        trigger={<Avatar name={displayName} size={32} />}
+        content={(onClose) => (
+          <>
+            <DropdownHeader>
+              <div style={{ fontWeight: 600 }}>{displayName}</div>
+              <div
+                style={{
+                  fontSize: 12,
+                  color: "var(--text-muted)",
+                  marginTop: 2,
+                }}
+              >
+                {user?.email || "Chưa cập nhật email"}
+              </div>
+            </DropdownHeader>
+            <DropdownSeparator />
+            <DropdownItem
+              icon={User}
+              onClick={() => {
+                navigate({ to: "/profile" });
+                onClose();
+              }}
+            >
+              Hồ sơ cá nhân
+            </DropdownItem>
+            <DropdownSeparator />
+            <DropdownItem
+              icon={LogOut}
+              variant="danger"
+              onClick={() => {
+                handleLogout();
+                onClose();
+              }}
+            >
+              Đăng xuất
+            </DropdownItem>
+          </>
+        )}
       />
     </Flex>
   );

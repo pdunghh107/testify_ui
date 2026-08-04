@@ -3,13 +3,17 @@ import { Plus } from "lucide-react";
 
 import { Sidebar, type SidebarNode } from "@/components/layout/sidebar";
 import { useWorkspaceTree } from "@/features/workspace/hooks/useWorkspaceTree";
-import { useProjectStore } from "@/store/workspaceStore";
+import { useWorkspaceStore } from "@/store/workspaceStore";
 
 export const DynamicSection = () => {
   const { nodes, WorkspaceModals, onNewFolder } = useWorkspaceTree();
 
-  const { activeWorkspaceId, setActiveWorkspace, activeFolderId, setActiveFolder } =
-    useProjectStore();
+  const {
+    activeWorkspaceId,
+    setActiveWorkspace,
+    activeFolderId,
+    setActiveFolder,
+  } = useWorkspaceStore();
   const activeNodeId = activeFolderId || activeWorkspaceId || null;
   const navigate = useNavigate();
 

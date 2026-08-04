@@ -1,6 +1,7 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import { clearTokens } from '../utils/cookies';
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+
+import { clearTokens } from "../utils/cookies";
 
 // ─── 1. Định nghĩa Type ───
 export interface AuthUser {
@@ -27,12 +28,12 @@ export interface AuthUser {
 interface AuthState {
   user: AuthUser | null;
   isAuthenticated: boolean;
-  
+
   // Actions
   setAuth: (user: AuthUser) => void;
   updateUser: (data: Partial<AuthUser>) => void;
   logout: () => void;
-  
+
   // Getters / Logic kiểm tra quyền
   hasSystemModule: (moduleCode: string) => boolean;
   hasPermission: (permissionCode: string) => boolean;
@@ -48,10 +49,11 @@ export const useAuthStore = create<AuthState>()(
 
       // Thay đổi State
       setAuth: (user) => set({ user, isAuthenticated: true }),
-      
-      updateUser: (data) => set((state) => ({
-        user: state.user ? { ...state.user, ...data } : null
-      })),
+
+      updateUser: (data) =>
+        set((state) => ({
+          user: state.user ? { ...state.user, ...data } : null,
+        })),
 
       logout: () => {
         clearTokens();
@@ -66,12 +68,19 @@ export const useAuthStore = create<AuthState>()(
 
         const modules = user.systemModules || [];
         const permissions = user.systemPermissions || [];
-        
-        if (user.role === 'super_admin' || modules.includes('*') || permissions.includes('*')) {
+
+        if (
+          user.role === "super_admin" ||
+          modules.includes("*") ||
+          permissions.includes("*")
+        ) {
           return true;
         }
-        
-        return modules.includes(moduleCode) || permissions.some(p => p.startsWith(`${moduleCode.toUpperCase()}`));
+
+        return (
+          modules.includes(moduleCode) ||
+          permissions.some((p) => p.startsWith(`${moduleCode.toUpperCase()}`))
+        );
       },
 
       hasPermission: (permissionCode) => {
@@ -79,17 +88,20 @@ export const useAuthStore = create<AuthState>()(
         if (!user) return false;
 
         const permissions = user.systemPermissions || [];
-        if (user.role === 'super_admin' || permissions.includes('*')) {
+        if (user.role === "super_admin" || permissions.includes("*")) {
           return true;
         }
-        
+
         return permissions.includes(permissionCode);
       },
     }),
     {
-      name: 'testify-auth-storage', // Key lưu trong localStorage
+      name: "testify-auth-storage", // Key lưu trong localStorage
       storage: createJSONStorage(() => localStorage), // Chỉ lưu state của Store vào localStorage
-      partialize: (state) => ({ user: state.user, isAuthenticated: state.isAuthenticated }), // Chỉ persist data, không persist hàm
-    }
-  )
+      partialize: (state) => ({
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+      }), // Chỉ persist data, không persist hàm
+    },
+  ),
 );

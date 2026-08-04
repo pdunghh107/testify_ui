@@ -65,9 +65,8 @@ export function UpdateConfigModal({ isOpen, onClose, onSuccess, initialData }: P
       onClose={onClose}
       title="Chỉnh sửa cấu hình"
       submitText={loading ? "Đang lưu..." : "Lưu thay đổi"}
-      onSubmit={methods.handleSubmit(onSubmit)}
-      asForm={true}
-    >
+      onConfirm={methods.handleSubmit(onSubmit)}
+      >
       <FormProvider {...methods}>
         <ConfigForm />
       </FormProvider>

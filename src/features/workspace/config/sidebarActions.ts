@@ -3,15 +3,15 @@ import type { ActionConfig, SidebarNode } from "@/components/layout/sidebar";
 
 export interface WorkspaceSidebarHandlers {
   onNewFolder: (workspaceId: string, parentFolderId?: string) => void;
-  onDeleteProject: (workspaceId: string, projectName: string) => void;
+  onDeleteWorkspace: (workspaceId: string, workspaceName: string) => void;
   onDeleteFolder: (folderId: string, folderName: string) => void;
   onNewRequest: (workspaceId: string, folderId?: string) => void;
   onDeleteRequest: (requestId: string, requestName: string) => void;
 }
 
-export const getProjectActions = (
+export const getWorkspaceActions = (
   workspaceId: string,
-  projectName: string,
+  workspaceName: string,
   handlers: WorkspaceSidebarHandlers,
 ): ActionConfig<SidebarNode>[] => [
   {
@@ -28,7 +28,7 @@ export const getProjectActions = (
     label: "Xóa Workspace",
     icon: Trash2,
     variant: "danger",
-    onClick: () => handlers.onDeleteProject(workspaceId, projectName),
+    onClick: () => handlers.onDeleteWorkspace(workspaceId, workspaceName),
   },
 ];
 

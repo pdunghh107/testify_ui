@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { getInitials, getAvatarColors } from "../../../utils/avatar";
+
 import { fonts } from "../../../styles/fonts";
+import { getAvatarColors, getInitials } from "../../../utils/avatar";
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
@@ -18,21 +19,40 @@ const AvatarContainer = styled.div<{
   $bgColor: string;
   $color: string;
   $fontSize: number;
+  $interactive?: boolean;
 }>`
+  user-select: none;
+
+  overflow: hidden;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
   width: ${({ $size }) => $size}px;
   height: ${({ $size }) => $size}px;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
   font-family: ${fonts.family.base};
-  font-weight: ${fonts.weight.semibold};
   font-size: ${({ $fontSize }) => $fontSize}px;
-  background-color: ${({ $bgColor }) => $bgColor};
+  font-weight: ${fonts.weight.semibold};
   color: ${({ $color }) => $color};
-  overflow: hidden;
-  flex-shrink: 0;
-  user-select: none;
+
+  background-color: ${({ $bgColor }) => $bgColor};
+
+  ${({ $interactive }) =>
+    $interactive &&
+    `
+    cursor: pointer;
+    transition: filter 0.2s, opacity 0.2s, transform 0.1s;
+    &:hover {
+      filter: brightness(0.9);
+      opacity: 0.9;
+    }
+    &:active {
+      transform: scale(0.95);
+    }
+  `}
 
   img {
     width: 100%;
@@ -43,7 +63,7 @@ const AvatarContainer = styled.div<{
 
 export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
   (
-    { name, src, size = 36, color, bgColor, fontSize, children, ...rest },
+    { name, src, size = 36, color, bgColor, fontSize, children, onClick, ...rest },
     ref,
   ) => {
     // Sử dụng State thay vì thao tác DOM trực tiếp (chuẩn Declarative)
@@ -61,6 +81,8 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
         $color={finalColor}
         $bgColor={finalBgColor}
         $fontSize={defaultFontSize}
+        $interactive={!!onClick}
+        onClick={onClick}
         {...rest}
       >
         {src && !imgError ? (

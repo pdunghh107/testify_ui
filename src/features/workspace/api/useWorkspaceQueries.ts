@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getProjects, createProject, deleteProject } from "@/api/workspaceApi";
+import { getWorkspaces, createWorkspace, deleteWorkspace } from "@/api/workspaceApi";
 import { getFolders, createFolder, deleteFolder } from "@/api/folderApi";
 
-export const PROJECT_KEYS = {
+export const WORKSPACE_KEYS = {
   all: ["workspaces"] as const,
   folders: (workspaceId: string) => ["workspaces", workspaceId, "folders"] as const,
 };
@@ -11,17 +11,17 @@ export const PROJECT_KEYS = {
 
 export const useWorkspaces = () => {
   return useQuery({
-    queryKey: PROJECT_KEYS.all,
-    queryFn: getProjects,
+    queryKey: WORKSPACE_KEYS.all,
+    queryFn: getWorkspaces,
   });
 };
 
 export const useCreateWorkspace = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: createProject,
+    mutationFn: createWorkspace,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: PROJECT_KEYS.all });
+      queryClient.invalidateQueries({ queryKey: WORKSPACE_KEYS.all });
     },
   });
 };
@@ -29,9 +29,9 @@ export const useCreateWorkspace = () => {
 export const useDeleteWorkspace = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: deleteProject,
+    mutationFn: deleteWorkspace,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: PROJECT_KEYS.all });
+      queryClient.invalidateQueries({ queryKey: WORKSPACE_KEYS.all });
     },
   });
 };
@@ -40,7 +40,7 @@ export const useDeleteWorkspace = () => {
 
 export const useFolders = (workspaceId: string | null) => {
   return useQuery({
-    queryKey: PROJECT_KEYS.folders(workspaceId!),
+    queryKey: WORKSPACE_KEYS.folders(workspaceId!),
     queryFn: () => getFolders(workspaceId!),
     enabled: !!workspaceId,
   });
@@ -52,7 +52,7 @@ export const useCreateFolder = (workspaceId: string) => {
     mutationFn: (payload: { name: string; parentFolderId?: string | null }) =>
       createFolder(workspaceId, payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: PROJECT_KEYS.folders(workspaceId) });
+      queryClient.invalidateQueries({ queryKey: WORKSPACE_KEYS.folders(workspaceId) });
     },
   });
 };
@@ -62,7 +62,7 @@ export const useDeleteFolder = (workspaceId: string) => {
   return useMutation({
     mutationFn: (folderId: string) => deleteFolder(workspaceId, folderId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: PROJECT_KEYS.folders(workspaceId) });
+      queryClient.invalidateQueries({ queryKey: WORKSPACE_KEYS.folders(workspaceId) });
     },
   });
 };

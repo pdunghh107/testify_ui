@@ -1,19 +1,25 @@
+import {
+  MutationCache,
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
-import { QueryClient, QueryClientProvider, MutationCache, QueryCache } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { ThemeProvider } from "styled-components";
-import { theme } from "./styles/theme";
-import { routeTree } from "./routeTree.gen";
-import { GlobalStyle } from "./styles/globalStyles";
-import { getErrorMessage } from "./utils/error";
+
 import { NotFound } from "./components/layout/NotFound";
 import { ConfirmProvider } from "./contexts/ConfirmProvider";
+import { routeTree } from "./routeTree.gen";
+import { GlobalStyle } from "./styles/globalStyles";
+import { theme } from "./styles/theme";
+import { getErrorMessage } from "./utils/error";
 
-const router = createRouter({ 
+const router = createRouter({
   routeTree,
-  defaultNotFoundComponent: () => <NotFound />
+  defaultNotFoundComponent: () => <NotFound />,
 });
 const queryClient = new QueryClient({
   queryCache: new QueryCache({

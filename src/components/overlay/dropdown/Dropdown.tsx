@@ -1,29 +1,38 @@
-import React, { useState } from "react";
 import {
-  useFloating,
   autoUpdate,
-  offset,
   flip,
+  FloatingFocusManager,
+  FloatingPortal,
+  offset,
   shift,
   useClick,
   useDismiss,
-  useRole,
+  useFloating,
   useInteractions,
-  FloatingPortal,
-  FloatingFocusManager,
+  useRole,
   useTransitionStyles,
 } from "@floating-ui/react";
+import React, { useState } from "react";
+
 import {
   DropdownMenuContainer,
   StyledDropdownHeader,
-  StyledDropdownSeparator,
   StyledDropdownItem,
+  StyledDropdownSeparator,
 } from "./Dropdown.styles";
 
 export interface DropdownProps {
   trigger: React.ReactNode;
   content: (onClose: () => void) => React.ReactNode;
-  placement?: "bottom-start" | "bottom-end" | "top-start" | "top-end" | "bottom" | "top" | "left" | "right";
+  placement?:
+    | "bottom-start"
+    | "bottom-end"
+    | "top-start"
+    | "top-end"
+    | "bottom"
+    | "top"
+    | "left"
+    | "right";
   className?: string;
   disabled?: boolean;
 }
@@ -70,7 +79,11 @@ export function Dropdown({
       <div
         ref={refs.setReference}
         {...getReferenceProps()}
-        style={{ display: "inline-block", cursor: disabled ? "default" : "pointer" }}
+        style={{
+          display: "inline-block",
+          cursor: disabled ? "default" : "pointer",
+          outline: "none",
+        }}
       >
         {trigger}
       </div>
@@ -80,7 +93,7 @@ export function Dropdown({
           <FloatingFocusManager context={context} modal={false}>
             <div
               ref={refs.setFloating}
-              style={{ ...floatingStyles, zIndex: 9999 }}
+              style={{ ...floatingStyles, zIndex: 9999, outline: "none" }}
               {...getFloatingProps()}
             >
               <DropdownMenuContainer

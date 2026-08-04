@@ -43,7 +43,7 @@ export const CreateFolderModal = ({
       onClose={onClose}
       title={parentFolderId ? "Create Sub-folder" : "Create Folder"}
       isLoading={createFolder.isPending}
-      onSubmit={() => formRef.current?.submit()}
+      onConfirm={() => formRef.current?.submit()}
       asForm={false}
     >
       <Form schema={schema} onSubmit={handleSubmit} ref={formRef}>
